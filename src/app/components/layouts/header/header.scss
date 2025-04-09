@@ -1,0 +1,22 @@
+@import "../../../../styles/sass/Foundation/index";
+
+.l-nav {
+  height: 60px;
+  background-color: yellow;
+  position: fixed;
+  width: 100vw;
+
+  &__wrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    @include wrapperSymmetry();
+
+    nav{
+      @include flexCustom(row, flex-start, center, 36px);
+      margin-left: auto;
+
+    }
+  }
+}

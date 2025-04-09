@@ -1,0 +1,16 @@
+@import "../../../styles/sass/Foundation/Global/index";
+
+.p-hero{
+  &__container{
+    width: 100vw;
+    height: 90vh;
+    background-image: linear-gradient(to right,$black,$offBlack);
+    @include flexCentering(row);
+  }
+
+  &__box{
+    height: 100%;
+    width: 50%;
+    @include flexCentering(column)
+  }
+}

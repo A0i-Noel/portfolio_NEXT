@@ -1,0 +1,11 @@
+@use "./responsiveness" as *;
+
+// for the contents to expand 100vw
+@mixin wrapperSymmetry(){
+margin: 0 122px;
+
+@include mq("sp"){
+  margin: 0 22px;
+}
+
+}
