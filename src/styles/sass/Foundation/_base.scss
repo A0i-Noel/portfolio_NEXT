@@ -1,5 +1,92 @@
 @import "./Global/index";
 
-h1,h2,h3,h4,h5,h6 {
+html,
+body,
+*,
+main,
+.root {
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+html {
+  background-image: linear-gradient(to right,$black,$offBlack);
+  
+}
+
+
+h1,h2,h3,h4,h5,h6,p {
   color: $white;
+}
+
+h1{
+  font-size: clamp(44px, 4vw, 48px);
+  line-height: clamp(52px, 4vw, 56px);
+  font-weight: clamp(500, 600, 700);
+}
+
+h2{
+  font-size: clamp(36px, 4vw, 40px);
+  line-height: clamp(40px, 4vw, 44px);
+  font-weight: clamp(400, 500, 700);
+
+}
+
+h3{
+  font-size: clamp(28px, 4vw, 32px);
+  line-height: clamp(32px, 4vw, 36px);
+  font-weight: clamp(300, 400, 500);
+}
+
+h4{
+  font-size: clamp(24px, 4vw, 28px);
+  line-height: clamp(28px, 4vw, 32px);
+  font-weight: clamp(300, 400, 500);
+}
+h5{
+  font-size: clamp(20px, 4vw, 24px);
+  line-height: clamp(24px, 4vw, 28px);
+  font-weight: clamp(300, 400, 500);
+
+}
+h6{
+
+  font-size: clamp(16px, 4vw, 20px);
+  line-height: clamp(18px, 4vw, 24px);
+  font-weight: clamp(300, 400, 500);
+}
+
+p{
+  font-size: clamp(12px, 4vw, 16px);
+  line-height: clamp(18px, 4vw, 24px);
+}
+
+b{
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+i{
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 1px;
+  margin-left: 20px;
+  height: 1px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #fafafa;
 }

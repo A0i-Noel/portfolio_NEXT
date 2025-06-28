@@ -1,7 +1,9 @@
 const page = () => {
   return (
-    <div>
-      About Page
+    <div className="l-page">
+      <div className="l-page__inner">
+      About
+      </div>
     </div>
   );
 }

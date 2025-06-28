@@ -2,7 +2,7 @@
 
 .p-hero{
   &__container{
-    width: 100vw;
+    width: 100%;
     height: 90vh;
     background-image: linear-gradient(to right,$black,$offBlack);
     @include flexCentering(row);
@@ -10,7 +10,57 @@
 
   &__box{
     height: 100%;
-    width: 50%;
-    @include flexCentering(column)
+    width: 100%;
+    position: relative;
+    @include flexCentering(column);
+    margin-left: 24px;
+    padding: $contentPadding;
+    h1{
+      line-height: 1.8;
+    }
+    p{
+      text-align: center;
+    }
   }
+
+  &__imgs{
+    width: 100%;
+    display: grid;
+    grid-template-areas: 
+    "win me"
+    "team team"
+    "team team";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+    margin-top: auto;
+
+    &--win{
+      width: 100%;
+      object-fit: contain;
+      grid-area: win;
+      margin: auto 0;
+    }
+
+    &--me {
+      width: 100%;
+      max-height: 320px;
+      object-fit: contain;
+      grid-area: me;
+
+    }
+
+    &--team {
+      width: 100%;
+      object-fit: contain;
+      grid-area: team;
+
+    }
+  }
+
+  &__galaxy{
+    position: absolute;
+    
+  }
+
 }

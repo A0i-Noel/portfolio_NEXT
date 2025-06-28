@@ -1,7 +1,7 @@
 'use client'
 
+import { getCookies } from "@/functions/Internal/cookies";
 import { LanguageType } from "@/interface/language";
-import { Cookies } from "js-cookie";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react"
 
 const LanguageContext = createContext<LanguageType | undefined>(undefined);
@@ -11,10 +11,13 @@ export const LanguageProvider = ({children}: {children:ReactNode}) => {
   const [language, setLanguage] = useState('EN');
 
   useEffect(() => {
-    const savedLang = Cookies.get('lang')
-    if(savedLang){
-      setLanguage(savedLang)
+    const getLang = async() => {
+      const savedLang = await getCookies("lang")
+      if(savedLang){
+        setLanguage(savedLang)
+      }
     }
+    getLang()
   },[])
 
   const toggleLanguage = (lang:string) => {

@@ -1,7 +1,9 @@
 const page = () => {
   return (
-    <div>
-      Enter
+    <div className="l-page">
+      <div className="l-page__inner">
+      contact
+      </div>
     </div>
   );
 }
