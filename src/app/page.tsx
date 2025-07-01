@@ -7,10 +7,8 @@ export default function Home() {
     <div className="l-page">
       <div className="l-page__inner">
         <Hero />
-
         <Contact />
       </div>
     </div>
   );
 }
-
