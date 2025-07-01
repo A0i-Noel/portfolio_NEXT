@@ -28,28 +28,42 @@ const Hero = () => {
 
   return (
     <div className="p-hero__container">
+      {/* Background Animation */}
       <GalaxyBackground className="p-hero__galaxy"/>
+      {/* Right side content */}
       <div className="p-hero__box">
-        <TypingText text={heroTexts?.name[language]} tag={"h1"} />
-        <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-            transition:{duration:3}
-          }}
-        >
-          {
-            heroTexts?.intro[language].map((e:string,i:number) => (
-              <p key={i}>{e}</p>
-            ))
-          }
+        {/* Profile */}
+        <div className="l-flex__column--center">
+          <TypingText text={heroTexts?.name[language]} tag={"h1"} />
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+              transition:{duration:3}
+            }}
+          >
+            {
+              heroTexts?.intro[language].map((e:string,i:number) => (
+                <p key={i}>{e}</p>
+              ))
+            }
+          </motion.div>
+        </div>
+        {/* Table of Contents */}
+        {/* <div className="l-flex__column--center">
+          <a>Skill</a>
+          <a>Experience</a>
+          <a>Projects</a>
+          <a>Contacts</a>
+        </div> */}
 
-
-        </motion.div>
       </div>
+
+      {/* Right Side contents */}
       <div className="p-hero__box">
+        {/* Image parts */}
         <div className="p-hero__imgs">
           <motion.img 
           initial={{

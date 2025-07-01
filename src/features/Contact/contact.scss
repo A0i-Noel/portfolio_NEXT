@@ -1,0 +1,95 @@
+@import "../../styles/sass/Foundation/index";
+
+.p-contact {
+  &__icons {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 16px 24px;
+  }
+
+  &__emailForm {
+    width: 100%;
+    
+  }
+
+  &__form {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+    margin: 24px auto;
+    border-top: $neutral 1px solid;
+    padding: 24px 40px;
+
+    &--inputBox {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+      
+      label{
+        color: $offWhite;
+        text-align: left;
+      }
+
+      input {
+        background-color: transparent;
+        border: 0;
+        border-bottom: $white 1px solid;
+        color: $white;
+
+        &:focus{
+          outline: none; 
+          border: none; 
+          box-shadow: none;
+          border-bottom: $white 1px solid;
+        }
+      }
+    }
+
+    &--textarea {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 8px;
+
+
+      label{
+        color: $offWhite;
+        text-align: left;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 3px 6px;
+        background-color: transparent;
+        border-radius: 2px;
+        color: $white;
+        &:focus{
+          outline: none; 
+          box-shadow: none;
+
+        }
+      }
+    }
+
+    button{
+      margin-left: auto;
+      background-color: transparent;
+      padding: 6px 16px;
+      color: $white;
+      box-shadow: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  }
+}

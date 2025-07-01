@@ -4,6 +4,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    &--center {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    }
   }
 
   &__row{

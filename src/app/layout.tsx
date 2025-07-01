@@ -4,6 +4,8 @@ import Header from "./components/layouts/header/Header";
 import Footer from "./components/layouts/footer/Footer";
 import "../styles/sass/global.scss"
 import { LanguageProvider } from "@/contexts/languageCtx";
+import LanguageSwitch from "./components/elements/LanguageSwitch";
+import { Toaster } from 'react-hot-toast';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aoi Kuriki Portfolio",
+  title: "Aoi Kuriki",
   description: "Aoi Kuriki's Portfolio",
 };
 
@@ -29,12 +31,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <LanguageProvider>
-          <Header />
+          <LanguageSwitch />
+          <Toaster />
           <body 
             className={`${geistSans.variable} ${geistMono.variable} `} >
             {children}
           </body>
-          {/* <Footer /> */}
         </LanguageProvider>
       </body>
     </html>

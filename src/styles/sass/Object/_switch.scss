@@ -57,3 +57,12 @@ input:checked + .slider:before {
 .slider:before {
   border-radius: 50%;
 }
+
+.p-langSwitch {
+  position: fixed;
+  width: fit-content;
+  background-color: transparent;
+  top: 24px;
+  left: 40px;
+  z-index: 10;
+}

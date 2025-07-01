@@ -1,4 +1,5 @@
-import Hero from "@/features/Home/Hero/Hero";
+import Contact from "@/features/Contact/Contact";
+import Hero from "@/features/Hero/Hero";
 
 
 export default function Home() {
@@ -6,6 +7,8 @@ export default function Home() {
     <div className="l-page">
       <div className="l-page__inner">
         <Hero />
+
+        <Contact />
       </div>
     </div>
   );

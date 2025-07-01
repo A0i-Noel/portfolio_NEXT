@@ -14,8 +14,8 @@ const LanguageSwitch = () => {
   }
 
   return (
-    <div className="l-flex__row">
-      <label style={{margin: "0 12px"}}>EN</label>
+    <div className="l-flex__row p-langSwitch">
+      <label style={{margin: "0 12px",color:"#fff"}}>EN</label>
       <form action="#">
         <label className="switch">
           <input
@@ -26,7 +26,7 @@ const LanguageSwitch = () => {
           <span className="slider"></span>
         </label>
       </form>
-      <label style={{margin: "0 12px"}}>JPN</label>
+      <label style={{margin: "0 12px",color:"#fff"}}>JPN</label>
     </div>
   );
 }
