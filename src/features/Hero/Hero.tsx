@@ -5,9 +5,11 @@ import "./hero.scss";
 import {motion} from "framer-motion";
 import { TypingText } from "@/app/components/elements/Texts/TypeText";
 import GalaxyBackground from "@/features/p5/core";
+import Image from "next/image";
 const winImg = "/images/winDay.jpg";
 const teamImg = "/images/Team.jpg";
 const meImg = "/images/me.jpg";
+const logo = "/images/AoiLogo.png"
 
 const Hero = () => {
   const { language } = useLanguage()
@@ -28,6 +30,13 @@ const Hero = () => {
 
   return (
     <div className="p-hero__container">
+      <Image 
+        className="p-hero__logo"
+        src={logo} 
+        alt="Aoi Kuriki Logo" 
+        width={128} 
+        height={128} 
+      />
       {/* Background Animation */}
       <GalaxyBackground className="p-hero__galaxy"/>
       {/* Right side content */}
