@@ -63,7 +63,7 @@ input:checked + .slider:before {
   width: fit-content;
   background-color: transparent;
   top: 0;
-  left: 40px;
+  right: 40px;
   z-index: 10;
   padding-top: 24px;
 }
