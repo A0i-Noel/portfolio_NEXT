@@ -42,6 +42,7 @@ export const TypingText = ({ text = "", speed = 100, tag: Tag = "p", className="
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
       style={{ whiteSpace: "pre-wrap" }}
+      className={className}
     >
       {displayedText}
     </MotionTag>
