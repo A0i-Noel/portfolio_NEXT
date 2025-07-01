@@ -152,7 +152,7 @@ const GalaxyBackground = ({ className = '' }: { className?: string }) => {
   return (
     <div
       ref={canvasRef}
-      className={`fixed inset-0 -z-10 ${className}`}
+      className={`${className}`}
       style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}
     />
   );

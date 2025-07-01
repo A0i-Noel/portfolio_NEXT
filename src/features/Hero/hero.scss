@@ -3,9 +3,13 @@
 .p-hero{
   &__container{
     width: 100%;
-    height: 90vh;
+    height: 100vh;
     background-image: linear-gradient(to right,$black,$offBlack);
     @include flexCentering(row);
+
+    @include mq("sp"){
+      @include flexCentering(column);
+    }
   }
 
   &__box{
@@ -21,6 +25,10 @@
     p{
       text-align: center;
     }
+
+    @include mq("sp"){
+      margin-left: 0;
+    }
   }
 
   &__imgs{
@@ -34,6 +42,9 @@
     grid-template-rows: 1fr 1fr;
     gap: 16px;
     margin-top: auto;
+    @include mq("tab"){
+      margin-top: 0;
+    }
 
     &--win{
       width: 100%;
