@@ -6,7 +6,7 @@ import {motion} from "framer-motion";
 import { TypingText } from "@/app/components/elements/Texts/TypeText";
 import GalaxyBackground from "@/features/p5/core";
 import Image from "next/image";
-const winImg = "/images/winDay.jpg";
+const winImg = "/images/winDay.JPG";
 const teamImg = "/images/Team.jpg";
 const meImg = "/images/me.jpg";
 const logo = "/images/AoiLogo.png"
