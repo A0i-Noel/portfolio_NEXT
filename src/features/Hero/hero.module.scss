@@ -1,0 +1,435 @@
+// ═══════════════════════════════════════════════════════
+// HERO — Full-viewport opening section
+// Frosted glass card · fog blobs · dot grid
+// ═══════════════════════════════════════════════════════
+@use '@/styles/sass/Foundation/Global' as g;
+@use '@/styles/sass/Foundation/Global/Mixin' as m;
+
+// ─── Section shell ───────────────────────────────────
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: g.$nav-height-pc;
+
+  @include m.mq(sp) {
+    padding-top: g.$nav-height-sp;
+    min-height: 100svh;
+    align-items: flex-start;
+    padding-bottom: 5rem;
+  }
+}
+
+// ─── Ambient fog blobs ───────────────────────────────
+// Pure CSS radial gradients — no extra elements needed at runtime
+.hero__fog {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+%fog-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform;
+}
+
+.hero__fog--blob1 {
+  @extend %fog-blob;
+  width: 600px;
+  height: 600px;
+  top: -10%;
+  left: -8%;
+  background: radial-gradient(
+    circle,
+    rgba(g.$color-primary, 0.13) 0%,
+    transparent 70%
+  );
+  animation: fog-drift1 18s ease-in-out infinite alternate;
+
+  @include m.mq(sp) {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+.hero__fog--blob2 {
+  @extend %fog-blob;
+  width: 500px;
+  height: 500px;
+  top: 20%;
+  right: -5%;
+  background: radial-gradient(
+    circle,
+    rgba(g.$color-fog-light, 0.8) 0%,
+    transparent 70%
+  );
+  animation: fog-drift2 22s ease-in-out infinite alternate;
+
+  @include m.mq(sp) {
+    width: 250px;
+    height: 250px;
+    right: -15%;
+  }
+}
+
+.hero__fog--blob3 {
+  @extend %fog-blob;
+  width: 400px;
+  height: 400px;
+  bottom: 5%;
+  left: 35%;
+  background: radial-gradient(
+    circle,
+    rgba(g.$color-primary, 0.07) 0%,
+    transparent 70%
+  );
+  animation: fog-drift3 26s ease-in-out infinite alternate;
+
+  @include m.mq(sp) {
+    width: 200px;
+    height: 200px;
+    left: 20%;
+  }
+}
+
+@keyframes fog-drift1 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(40px, 30px) scale(1.08); }
+}
+
+@keyframes fog-drift2 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-30px, 40px) scale(1.05); }
+}
+
+@keyframes fog-drift3 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(20px, -30px) scale(1.1); }
+}
+
+// ─── Dot grid ────────────────────────────────────────
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  // SVG dot grid via background — subtle, doesn't need an image file
+  background-image: radial-gradient(
+    circle,
+    rgba(g.$color-primary, 0.18) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+  mask-image: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    black 20%,
+    transparent 100%
+  );
+  opacity: 0.5;
+}
+
+// ─── Inner layout ─────────────────────────────────────
+.hero__inner {
+  position: relative;
+  z-index: g.$z-raised;
+  max-width: g.$container-max;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5rem g.$container-padding-pc;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 4rem;
+  align-items: center;
+
+  @include m.mq(tab) {
+    padding: 4rem g.$container-padding-tab;
+    grid-template-columns: 1fr 280px;
+    gap: 2.5rem;
+  }
+
+  @include m.mq(sp) {
+    padding: 3rem g.$container-padding-sp 2rem;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+// ─── Content (left column) ────────────────────────────
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+// ─── Eyebrow pill ─────────────────────────────────────
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  padding: 0.35rem 1rem 0.35rem 0.75rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-wide;
+  text-transform: uppercase;
+  color: g.$color-primary;
+  background: g.$color-primary-light;
+  border: 1px solid rgba(g.$color-primary, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+// Pulsing green dot
+.hero__status {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: g.$radius-full;
+  background: g.$color-success;
+  box-shadow: 0 0 0 0 rgba(g.$color-success, 0.4);
+  animation: status-pulse 2.5s ease-out infinite;
+}
+
+@keyframes status-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(g.$color-success, 0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(g.$color-success, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(g.$color-success, 0); }
+}
+
+// ─── Name ────────────────────────────────────────────
+.hero__name {
+  font-size: g.$text-hero;
+  font-weight: g.$weight-bold;
+  letter-spacing: g.$tracking-tight;
+  line-height: g.$leading-none;
+  color: g.$color-text-primary;
+
+  // Subtle gradient on the name itself
+  background: linear-gradient(
+    135deg,
+    g.$color-text-primary 0%,
+    g.$color-primary 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  @include m.mq(sp) {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+  }
+}
+
+// ─── Role title ───────────────────────────────────────
+.hero__title {
+  font-size: g.$text-xl;
+  font-weight: g.$weight-medium;
+  color: g.$color-text-secondary;
+  letter-spacing: g.$tracking-snug;
+  line-height: g.$leading-snug;
+  max-width: none;
+
+  @include m.mq(sp) {
+    font-size: g.$text-lg;
+  }
+}
+
+// ─── Description ─────────────────────────────────────
+.hero__description {
+  font-size: g.$text-md;
+  color: g.$color-text-secondary;
+  line-height: g.$leading-loose;
+  max-width: 52ch;
+
+  @include m.mq(sp) {
+    font-size: g.$text-base;
+    max-width: 100%;
+  }
+}
+
+// ─── CTAs ────────────────────────────────────────────
+.hero__ctas {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+%cta-base {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.75rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-sm;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-wide;
+  cursor: pointer;
+  transition:
+    transform g.$transition-spring,
+    box-shadow g.$transition-glass,
+    background g.$transition-base,
+    border-color g.$transition-base;
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.hero__cta--primary {
+  @extend %cta-base;
+  background: g.$color-primary;
+  color: g.$color-text-inverse;
+  border: 1px solid transparent;
+  box-shadow: g.$shadow-md, g.$shadow-glow;
+
+  @include m.hover {
+    background: g.$color-primary-hover;
+    box-shadow: g.$shadow-lg, 0 0 40px rgba(g.$color-primary, 0.35);
+    transform: translateY(-2px);
+  }
+}
+
+.hero__cta--secondary {
+  @extend %cta-base;
+  background: g.$color-glass;
+  color: g.$color-text-primary;
+  border: 1px solid g.$color-border-strong;
+  backdrop-filter: blur(12px);
+  box-shadow: g.$shadow-inset, g.$shadow-sm;
+
+  @include m.hover {
+    background: g.$color-glass-strong;
+    border-color: rgba(g.$color-primary, 0.35);
+    box-shadow: g.$shadow-inset, g.$shadow-md;
+    transform: translateY(-2px);
+  }
+}
+
+// ─── Tech tags ────────────────────────────────────────
+.hero__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.hero__tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-medium;
+  color: g.$color-text-secondary;
+  background: g.$color-glass-subtle;
+  border: 1px solid g.$color-border;
+  backdrop-filter: blur(8px);
+  letter-spacing: g.$tracking-wide;
+  transition: color g.$transition-fast, border-color g.$transition-fast;
+
+  @include m.hover {
+    color: g.$color-primary;
+    border-color: rgba(g.$color-primary, 0.3);
+  }
+}
+
+// ─── Floating glass card (right column) ───────────────
+.hero__card {
+  @include m.glass(20px, 0.65);
+  border-radius: g.$radius-xl;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  // Soft top sheen (part of glass illusion)
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  // Position the pseudo above the content
+  position: relative;
+
+  @include m.mq(sp) {
+    padding: 1.5rem;
+  }
+}
+
+.hero__card_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+}
+
+.hero__card_label {
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-widest;
+  text-transform: uppercase;
+  color: g.$color-text-muted;
+}
+
+.hero__card_value {
+  font-size: g.$text-sm;
+  font-weight: g.$weight-semibold;
+  color: g.$color-text-primary;
+  text-align: right;
+}
+
+.hero__card_divider {
+  width: 100%;
+  height: 1px;
+  background: g.$color-border-muted;
+}
+
+// ─── Scroll indicator ─────────────────────────────────
+.hero__scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: g.$z-raised;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  @include m.mq(sp) {
+    display: none;
+  }
+}
+
+.hero__scroll_line {
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    g.$color-primary,
+    transparent
+  );
+  border-radius: g.$radius-full;
+  transform-origin: top;
+}
+
+.hero__scroll_label {
+  font-size: g.$text-xs;
+  letter-spacing: g.$tracking-widest;
+  text-transform: uppercase;
+  color: g.$color-text-muted;
+}

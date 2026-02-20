@@ -1,21 +1,60 @@
-$wrapperPadding: 16px 20px;
-$contentPadding: 8px 10px;
+// ═══════════════════════════════════════════════════════
+// LAYOUT VARIABLES
+// ═══════════════════════════════════════════════════════
 
-$borderRadius: 12px;
-$buttonPadding: 6px 12px;
-$smallButtonPadding: 2px 6px;
+// ─── Container ───────────────────────────────────────
+$container-max:        1200px;
+$container-padding-sp: 1.25rem;  // mobile
+$container-padding-tab: 2rem;    // tablet
+$container-padding-pc:  4rem;    // desktop
 
+// ─── Section spacing ─────────────────────────────────
+$section-padding-sp:   4rem 0;
+$section-padding-tab:  6rem 0;
+$section-padding-pc:   8rem 0;
 
-$containerPadding: 40px 20px;
-$containerMargin: 20px 16px;
-$containerTopMargin: 20px 0;
-$containerSideMargin: 0 16px;
+// ─── Z-index stack ───────────────────────────────────
+$z-base:    0;
+$z-raised:  10;
+$z-float:   50;
+$z-overlay: 100;
+$z-nav:     200;
+$z-modal:   300;
+$z-toast:   400;
 
-$contentMargin: 6px 10px;
-$contentTopMargin: 6px 0px;
-$buttonMargin: 3px 4px;
+// ─── Border radius ───────────────────────────────────
+$radius-xs:   4px;
+$radius-sm:   8px;
+$radius-md:   12px;
+$radius-lg:   20px;
+$radius-xl:   28px;
+$radius-2xl:  40px;
+$radius-full: 9999px;
 
-// For search bar autofill
-$autoCompletePadding: 6px 8px;
+// ─── Shadows ─────────────────────────────────────────
+// Glass-compatible shadows: soft, diffuse, indigo-tinted
+$shadow-xs:      0 1px 4px rgba(99, 102, 241, 0.06);
+$shadow-sm:      0 2px 8px rgba(99, 102, 241, 0.08),
+                 0 1px 3px rgba(0, 0, 0, 0.04);
+$shadow-md:      0 4px 20px rgba(99, 102, 241, 0.10),
+                 0 2px 6px rgba(0, 0, 0, 0.05);
+$shadow-lg:      0 8px 40px rgba(99, 102, 241, 0.12),
+                 0 4px 12px rgba(0, 0, 0, 0.06);
+$shadow-xl:      0 16px 60px rgba(99, 102, 241, 0.15),
+                 0 8px 20px rgba(0, 0, 0, 0.07);
+$shadow-glow:    0 0 30px rgba(99, 102, 241, 0.25);   // primary glow
+$shadow-inset:   inset 0 1px 0 rgba(255, 255, 255, 0.6); // glass top sheen
 
-$borderRadius : 12px
+// ─── Transitions ─────────────────────────────────────
+$transition-fast:   150ms ease;
+$transition-base:   250ms ease;
+$transition-slow:   400ms ease;
+$transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+$transition-glass:  300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+// ─── Nav ─────────────────────────────────────────────
+$nav-height-sp:  60px;
+$nav-height-pc:  72px;
+
+// ─── Header ──────────────────────────────────────────
+$header-height: $nav-height-pc;

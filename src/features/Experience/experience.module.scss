@@ -1,0 +1,394 @@
+// ═══════════════════════════════════════════════════════
+// EXPERIENCE — Vertical timeline
+// Glass cards · highlight roles · upcoming state
+// ═══════════════════════════════════════════════════════
+@use '@/styles/sass/Foundation/Global' as g;
+@use '@/styles/sass/Foundation/Global/Mixin' as m;
+
+// ─── Section shell ───────────────────────────────────
+.experience {
+  position: relative;
+  padding: 8rem 0;
+  overflow: hidden;
+
+  @include m.mq(tab) { padding: 6rem 0; }
+  @include m.mq(sp)  { padding: 4rem 0; }
+}
+
+// ─── Fog blobs ───────────────────────────────────────
+%fog-base {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.experience__fog1 {
+  @extend %fog-base;
+  width: 500px;
+  height: 500px;
+  top: 10%;
+  left: -120px;
+  background: radial-gradient(circle, rgba(g.$color-primary, 0.07) 0%, transparent 70%);
+
+  @include m.mq(sp) { width: 250px; height: 250px; left: -80px; }
+}
+
+.experience__fog2 {
+  @extend %fog-base;
+  width: 400px;
+  height: 400px;
+  bottom: 15%;
+  right: -80px;
+  background: radial-gradient(circle, rgba(g.$color-fog-light, 0.5) 0%, transparent 70%);
+
+  @include m.mq(sp) { width: 200px; height: 200px; }
+}
+
+// ─── Inner container ─────────────────────────────────
+.experience__inner {
+  position: relative;
+  z-index: g.$z-raised;
+  max-width: g.$container-max;
+  margin: 0 auto;
+  padding: 0 g.$container-padding-pc;
+
+  @include m.mq(tab) { padding: 0 g.$container-padding-tab; }
+  @include m.mq(sp)  { padding: 0 g.$container-padding-sp; }
+}
+
+// ─── Title block ─────────────────────────────────────
+.experience__title_block {
+  margin-bottom: 4rem;
+
+  @include m.mq(sp) { margin-bottom: 2.5rem; }
+}
+
+.experience__eyebrow {
+  display: inline-flex;
+  padding: 0.25rem 0.85rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-widest;
+  text-transform: uppercase;
+  color: g.$color-primary;
+  background: g.$color-primary-light;
+  border: 1px solid rgba(g.$color-primary, 0.2);
+  margin-bottom: 1rem;
+}
+
+.experience__heading {
+  font-size: g.$text-display;
+  font-weight: g.$weight-bold;
+  letter-spacing: g.$tracking-tight;
+  color: g.$color-text-primary;
+  line-height: g.$leading-tight;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, g.$color-primary, rgba(g.$color-primary, 0.2));
+    border-radius: g.$radius-full;
+    margin-top: 0.75rem;
+  }
+
+  @include m.mq(sp) { font-size: g.$text-2xl; }
+}
+
+// ═══════════════════════════════════════════════════════
+// TIMELINE
+// ═══════════════════════════════════════════════════════
+
+.timeline {
+  position: relative;
+  // Left gutter for the line + dot
+  padding-left: 2.5rem;
+
+  @include m.mq(sp) { padding-left: 1.75rem; }
+}
+
+// ─── Vertical line ───────────────────────────────────
+.timeline__line {
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    g.$color-primary,
+    rgba(g.$color-primary, 0.3),
+    transparent
+  );
+  border-radius: g.$radius-full;
+  transform-origin: top;
+}
+
+// ─── Items wrapper ───────────────────────────────────
+.timeline__items {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+// ─── Single item row ─────────────────────────────────
+.timeline__item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+
+  @include m.mq(sp) { gap: 1rem; }
+}
+
+// ─── Timeline dot ────────────────────────────────────
+.timeline__dot {
+  position: absolute;
+  left: -2.5rem;  // pulls back into the gutter
+  top: 1.4rem;
+  width: 16px;
+  height: 16px;
+  border-radius: g.$radius-full;
+  background: g.$color-glass-strong;
+  border: 2px solid g.$color-border-strong;
+  flex-shrink: 0;
+  z-index: g.$z-raised;
+  transition: border-color g.$transition-base, box-shadow g.$transition-base;
+
+  @include m.mq(sp) { left: -1.75rem; width: 12px; height: 12px; top: 1.5rem; }
+
+  // Founder roles — filled primary dot with glow
+  &--highlight {
+    background: g.$color-primary;
+    border-color: g.$color-primary;
+    box-shadow: 0 0 0 4px rgba(g.$color-primary, 0.15), g.$shadow-glow;
+  }
+
+  // Upcoming — pulsing outline
+  &--upcoming {
+    background: transparent;
+    border-color: g.$color-primary;
+    box-shadow: 0 0 0 4px rgba(g.$color-primary, 0.1);
+    animation: dot-pulse 2.5s ease-out infinite;
+  }
+}
+
+@keyframes dot-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(g.$color-primary, 0.3); }
+  70%  { box-shadow: 0 0 0 10px rgba(g.$color-primary, 0); }
+  100% { box-shadow: 0 0 0 0   rgba(g.$color-primary, 0); }
+}
+
+// ═══════════════════════════════════════════════════════
+// CARD
+// ═══════════════════════════════════════════════════════
+
+.card {
+  flex: 1;
+  @include m.glass(16px, 0.62);
+  border-radius: g.$radius-xl;
+  padding: 1.75rem;
+  transition:
+    box-shadow g.$transition-glass,
+    border-color g.$transition-glass,
+    transform g.$transition-glass;
+
+  @include m.hover {
+    box-shadow: g.$shadow-inset, g.$shadow-lg;
+    border-color: rgba(g.$color-primary, 0.2);
+    transform: translateY(-2px);
+  }
+
+  @include m.mq(sp) { padding: 1.25rem; }
+
+  // Founder highlight — subtle primary tint + stronger border
+  &--highlight {
+    border-color: rgba(g.$color-primary, 0.2);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(g.$color-primary, 0.03) 100%
+    );
+
+    @include m.hover {
+      border-color: rgba(g.$color-primary, 0.35);
+      box-shadow: g.$shadow-inset, g.$shadow-lg, 0 0 40px rgba(g.$color-primary, 0.1);
+    }
+  }
+
+  // Upcoming — dashed border, dimmed, slightly translucent
+  &--upcoming {
+    border-style: dashed;
+    border-color: rgba(g.$color-primary, 0.3);
+    background: rgba(255, 255, 255, 0.40);
+    opacity: 0.85;
+  }
+}
+
+// ─── Card header ─────────────────────────────────────
+.card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.card__company {
+  font-size: g.$text-sm;
+  font-weight: g.$weight-bold;
+  color: g.$color-primary;
+  letter-spacing: g.$tracking-wide;
+}
+
+.card__type {
+  font-size: g.$text-xs;
+  color: g.$color-text-muted;
+  letter-spacing: g.$tracking-wide;
+}
+
+.card__period {
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  color: g.$color-text-muted;
+  letter-spacing: g.$tracking-wide;
+  white-space: nowrap;
+  background: g.$color-primary-light;
+  padding: 0.2rem 0.65rem;
+  border-radius: g.$radius-full;
+  border: 1px solid rgba(g.$color-primary, 0.15);
+  align-self: flex-start;
+}
+
+// ─── Role title ──────────────────────────────────────
+.card__role {
+  font-size: g.$text-lg;
+  font-weight: g.$weight-bold;
+  color: g.$color-text-primary;
+  letter-spacing: g.$tracking-tight;
+  margin-bottom: 1.1rem;
+  line-height: g.$leading-snug;
+
+  @include m.mq(sp) { font-size: g.$text-md; }
+}
+
+// ─── Images (Subitt) ─────────────────────────────────
+.card__images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  border-radius: g.$radius-lg;
+  overflow: hidden;
+}
+
+.card__image_frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: g.$radius-md;
+  overflow: hidden;
+  background: g.$color-bg-deep;
+
+  // Sheen overlay
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+.card__image_img {
+  object-fit: cover;
+  transition: transform g.$transition-slow;
+
+  @include m.hover {
+    transform: scale(1.04);
+  }
+}
+
+// ─── Bullets ─────────────────────────────────────────
+.card__bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  list-style: none;
+}
+
+.card__bullet {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: g.$text-sm;
+  color: g.$color-text-secondary;
+  line-height: g.$leading-loose;
+
+  // Custom bullet dot
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: g.$radius-full;
+    background: g.$color-primary;
+    opacity: 0.6;
+  }
+
+  // Mission statement quote style (Orbit)
+  &--quote {
+    padding-left: 0;
+    font-style: italic;
+    font-size: g.$text-md;
+    color: g.$color-text-primary;
+    font-weight: g.$weight-medium;
+    line-height: g.$leading-snug;
+    border-left: 3px solid g.$color-primary;
+    padding-left: 1rem;
+    margin: 0.5rem 0;
+
+    &::before { display: none; }
+  }
+}
+
+// ─── Tags ────────────────────────────────────────────
+.card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.card__tag {
+  padding: 0.2rem 0.65rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-medium;
+  color: g.$color-text-secondary;
+  background: g.$color-glass-subtle;
+  border: 1px solid g.$color-border;
+  letter-spacing: g.$tracking-wide;
+  transition: color g.$transition-fast, border-color g.$transition-fast;
+
+  @include m.hover {
+    color: g.$color-primary;
+    border-color: rgba(g.$color-primary, 0.3);
+  }
+}

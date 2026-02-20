@@ -1,14 +1,29 @@
-import Contact from "@/features/Contact/Contact";
-import Hero from "@/features/Hero/Hero";
+import React, { Suspense } from 'react'
+import Hero from '@/features/Hero/Hero'
+import Header from './components/layouts/header/Header'
 
+const About      = React.lazy(() => import('@/features/About/About'))
+const Experience = React.lazy(() => import('@/features/Experience/Experience'))
+const Skills     = React.lazy(() => import('@/features/Skills/Skills'))
+const Projects   = React.lazy(() => import('@/features/Projects/Projects'))
+const Contact    = React.lazy(() => import('@/features/Contact/Contact'))
+
+function SectionFallback() {
+  return <div style={{ minHeight: '50vh' }} aria-hidden="true" />
+}
 
 export default function Home() {
   return (
-    <div className="l-page">
-      <div className="l-page__inner">
+    <>
+      <Header />
+      <main>
         <Hero />
-        <Contact />
-      </div>
-    </div>
-  );
+        <Suspense fallback={<SectionFallback />}><About /></Suspense>
+        <Suspense fallback={<SectionFallback />}><Experience /></Suspense>
+        <Suspense fallback={<SectionFallback />}><Skills /></Suspense>
+        <Suspense fallback={<SectionFallback />}><Projects /></Suspense>
+        <Suspense fallback={<SectionFallback />}><Contact /></Suspense>
+      </main>
+    </>
+  )
 }

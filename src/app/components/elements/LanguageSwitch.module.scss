@@ -1,0 +1,85 @@
+// ═══════════════════════════════════════════════════════
+// LANGUAGE SWITCH
+// Pill toggle · glass surface · fits inside the header
+// ═══════════════════════════════════════════════════════
+@use '@/styles/sass/Foundation/Global' as g;
+@use '@/styles/sass/Foundation/Global/Mixin' as m;
+
+// ─── Wrapper ─────────────────────────────────────────
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+// ─── Hidden input ────────────────────────────────────
+.switch__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+// ─── Track ───────────────────────────────────────────
+.switch__track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 40px;
+  height: 22px;
+  border-radius: g.$radius-full;
+  background: g.$color-glass;
+  border: 1px solid g.$color-border-strong;
+  backdrop-filter: blur(8px);
+  box-shadow: g.$shadow-inset;
+  transition: background g.$transition-base, border-color g.$transition-base;
+  flex-shrink: 0;
+
+  // Tint track when JP is active — driven by wrapper attribute
+  .switch[data-checked="true"] & {
+    background: rgba(g.$color-primary, 0.12);
+    border-color: rgba(g.$color-primary, 0.35);
+  }
+
+  // Focus ring via sibling within same wrapper scope
+  .switch__input:focus-visible ~ & {
+    outline: 2px solid g.$color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// ─── Thumb ───────────────────────────────────────────
+.switch__thumb {
+  position: absolute;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: g.$radius-full;
+  background: g.$color-primary;
+  box-shadow: g.$shadow-xs, g.$shadow-glow;
+  transition: transform g.$transition-spring;
+
+  // Slide right when JP active
+  .switch[data-checked="true"] & {
+    transform: translateX(18px);
+  }
+}
+
+// ─── Labels ──────────────────────────────────────────
+.switch__label {
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-wider;
+  color: g.$color-text-muted;
+  transition: color g.$transition-fast;
+  line-height: 1;
+  min-width: 1.5ch;
+  text-align: center;
+
+  &--active {
+    color: g.$color-primary;
+  }
+}

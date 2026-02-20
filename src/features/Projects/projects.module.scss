@@ -1,0 +1,324 @@
+// ═══════════════════════════════════════════════════════
+// PROJECTS — Card grid
+// Thumbnail · status pill · conditional link · tags
+// ═══════════════════════════════════════════════════════
+@use '@/styles/sass/Foundation/Global' as g;
+@use '@/styles/sass/Foundation/Global/Mixin' as m;
+
+// ─── Section shell ───────────────────────────────────
+.projects {
+  position: relative;
+  padding: 8rem 0;
+  overflow: hidden;
+
+  @include m.mq(tab) { padding: 6rem 0; }
+  @include m.mq(sp)  { padding: 4rem 0; }
+}
+
+// ─── Fog ─────────────────────────────────────────────
+%fog {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.projects__fog1 {
+  @extend %fog;
+  width: 500px;
+  height: 500px;
+  top: 0%;
+  left: -80px;
+  background: radial-gradient(circle, rgba(g.$color-primary, 0.07) 0%, transparent 70%);
+  @include m.mq(sp) { width: 240px; height: 240px; }
+}
+
+.projects__fog2 {
+  @extend %fog;
+  width: 400px;
+  height: 400px;
+  bottom: 5%;
+  right: -60px;
+  background: radial-gradient(circle, rgba(g.$color-fog-light, 0.6) 0%, transparent 70%);
+  @include m.mq(sp) { width: 200px; height: 200px; }
+}
+
+// ─── Inner container ─────────────────────────────────
+.projects__inner {
+  position: relative;
+  z-index: g.$z-raised;
+  max-width: g.$container-max;
+  margin: 0 auto;
+  padding: 0 g.$container-padding-pc;
+
+  @include m.mq(tab) { padding: 0 g.$container-padding-tab; }
+  @include m.mq(sp)  { padding: 0 g.$container-padding-sp; }
+}
+
+// ─── Title block ─────────────────────────────────────
+.projects__title_block {
+  margin-bottom: 3.5rem;
+  @include m.mq(sp) { margin-bottom: 2.5rem; }
+}
+
+.projects__eyebrow {
+  display: inline-flex;
+  padding: 0.25rem 0.85rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-widest;
+  text-transform: uppercase;
+  color: g.$color-primary;
+  background: g.$color-primary-light;
+  border: 1px solid rgba(g.$color-primary, 0.2);
+  margin-bottom: 1rem;
+}
+
+.projects__heading {
+  font-size: g.$text-display;
+  font-weight: g.$weight-bold;
+  letter-spacing: g.$tracking-tight;
+  color: g.$color-text-primary;
+  line-height: g.$leading-tight;
+  margin-bottom: 0.75rem;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, g.$color-primary, rgba(g.$color-primary, 0.2));
+    border-radius: g.$radius-full;
+    margin-top: 0.75rem;
+  }
+
+  @include m.mq(sp) { font-size: g.$text-2xl; }
+}
+
+.projects__subheading {
+  font-size: g.$text-md;
+  color: g.$color-text-secondary;
+  line-height: g.$leading-normal;
+  max-width: 52ch;
+  margin-top: 1rem;
+
+  @include m.mq(sp) { font-size: g.$text-base; }
+}
+
+// ─── Grid ────────────────────────────────────────────
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+
+  @include m.mq(tab) { grid-template-columns: repeat(2, 1fr); }
+  @include m.mq(sp)  { grid-template-columns: 1fr; }
+}
+
+// ═══════════════════════════════════════════════════════
+// CARD
+// ═══════════════════════════════════════════════════════
+
+.card {
+  @include m.glass(16px, 0.62);
+  border-radius: g.$radius-xl;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform g.$transition-glass,
+    box-shadow g.$transition-glass,
+    border-color g.$transition-glass;
+
+  @include m.hover {
+    transform: translateY(-4px);
+    box-shadow: g.$shadow-inset, g.$shadow-lg, 0 0 40px rgba(g.$color-primary, 0.08);
+    border-color: rgba(g.$color-primary, 0.25);
+  }
+
+  &--unavailable {
+    opacity: 0.75;
+
+    @include m.hover {
+      transform: none;
+      box-shadow: g.$shadow-inset, g.$shadow-md;
+      border-color: g.$color-border;
+      opacity: 0.85;
+    }
+  }
+}
+
+// ─── Thumbnail ───────────────────────────────────────
+.card__thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: g.$color-bg-deep;
+}
+
+.card__thumb_img {
+  object-fit: cover;
+  transition: transform g.$transition-slow;
+
+  .card:not(.card--unavailable):hover & {
+    transform: scale(1.04);
+  }
+}
+
+// Unavailable overlay
+.card__thumb_overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26, 27, 46, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+.card__thumb_msg {
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-wide;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: g.$radius-full;
+  backdrop-filter: blur(4px);
+}
+
+// Status pill — sits top-right over the thumbnail
+.card__status {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-wide;
+  color: g.$color-text-secondary;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid g.$color-border;
+}
+
+// ─── Status dots ─────────────────────────────────────
+.dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: g.$radius-full;
+  flex-shrink: 0;
+
+  &--green   { background: g.$color-success; }
+  &--grey    { background: g.$color-text-muted; }
+  &--amber   { background: g.$color-warning; }
+  &--primary {
+    background: g.$color-primary;
+    animation: dot-pulse 2.5s ease-out infinite;
+  }
+}
+
+@keyframes dot-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(g.$color-primary, 0.4); }
+  70%  { box-shadow: 0 0 0 6px rgba(g.$color-primary, 0); }
+  100% { box-shadow: 0 0 0 0   rgba(g.$color-primary, 0); }
+}
+
+// ─── Body ────────────────────────────────────────────
+.card__body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  flex: 1;
+
+  @include m.mq(sp) { padding: 1.25rem; }
+}
+
+.card__title_row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.card__title {
+  font-size: g.$text-lg;
+  font-weight: g.$weight-bold;
+  color: g.$color-text-primary;
+  letter-spacing: g.$tracking-tight;
+  line-height: 1.2;
+}
+
+.card__subtitle {
+  display: block;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-medium;
+  color: g.$color-primary;
+  letter-spacing: g.$tracking-wide;
+  margin-top: 0.2rem;
+}
+
+// Arrow link icon
+.card__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: g.$radius-md;
+  color: g.$color-text-muted;
+  background: g.$color-glass-subtle;
+  border: 1px solid g.$color-border;
+  flex-shrink: 0;
+  transition:
+    color g.$transition-fast,
+    background g.$transition-fast,
+    border-color g.$transition-fast,
+    transform g.$transition-spring;
+
+  @include m.hover {
+    color: g.$color-primary;
+    background: g.$color-primary-light;
+    border-color: rgba(g.$color-primary, 0.3);
+    transform: translate(2px, -2px);
+  }
+}
+
+.card__desc {
+  font-size: g.$text-sm;
+  color: g.$color-text-secondary;
+  line-height: g.$leading-loose;
+  max-width: none;
+  flex: 1;
+}
+
+// ─── Tags ────────────────────────────────────────────
+.card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+
+.card__tag {
+  padding: 0.2rem 0.65rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-medium;
+  color: g.$color-text-secondary;
+  background: g.$color-glass-subtle;
+  border: 1px solid g.$color-border;
+  letter-spacing: g.$tracking-wide;
+}
