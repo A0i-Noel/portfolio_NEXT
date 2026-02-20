@@ -4,7 +4,7 @@
 // ═══════════════════════════════════════════════════════
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, type Variants } from 'framer-motion'
 import styles from './sectionTitle.module.scss'
 
 interface SectionTitleProps {
@@ -15,7 +15,7 @@ interface SectionTitleProps {
   className?: string
 }
 
-const variants = {
+const variants : Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: (delay = 0) => ({
     opacity: 1,

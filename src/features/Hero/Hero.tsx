@@ -8,7 +8,7 @@ import styles from './hero.module.scss';
 const HERO_COPY = {
   eyebrow: {
     EN:  'Available for work',
-    JPN: '現在、就職活動中',
+    JPN: '依頼受付中',
   },
   name: {
     EN:  'Aoi Kuriki',
