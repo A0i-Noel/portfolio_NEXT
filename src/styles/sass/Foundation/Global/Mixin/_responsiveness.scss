@@ -1,11 +1,49 @@
+// ═══════════════════════════════════════════════════════
+// RESPONSIVE MIXINS
+// ═══════════════════════════════════════════════════════
+
 $breakpoint: (
-  sp: 'screen and (max-width: 767px)',
+  sp:  'screen and (max-width: 767px)',
   tab: 'screen and (min-width: 768px) and (max-width: 1024px)',
-  pc: 'screen and (min-width: 1025px)'
+  pc:  'screen and (min-width: 1025px)'
 );
 
+// Core responsive mixin
+// Usage: @include mq(sp) { ... }
 @mixin mq($bp) {
   @media #{map_get($breakpoint, $bp)} {
-   @content;
+    @content;
+  }
+}
+
+// Tablet and up (tab + pc)
+@mixin mq-above-sp {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+
+// Desktop only shorthand
+@mixin mq-pc {
+  @media screen and (min-width: 1025px) {
+    @content;
+  }
+}
+
+// Between two custom values (escape hatch)
+// Usage: @include mq-between(480px, 900px) { ... }
+@mixin mq-between($min, $max) {
+  @media screen and (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+// Hover — only apply hover styles on devices that support hover
+// (avoids sticky hover states on touch devices)
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
   }
 }

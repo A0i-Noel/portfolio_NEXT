@@ -1,0 +1,368 @@
+// ═══════════════════════════════════════════════════════
+// CONTACT — Two-column layout
+// Info left · glass form right · EmailJS wired
+// ═══════════════════════════════════════════════════════
+@use '@/styles/sass/Foundation/Global' as g;
+@use '@/styles/sass/Foundation/Global/Mixin' as m;
+
+// ─── Section shell ───────────────────────────────────
+.contact {
+  position: relative;
+  padding: 8rem 0 6rem;
+  overflow: hidden;
+
+  @include m.mq(tab) { padding: 6rem 0 4rem; }
+  @include m.mq(sp)  { padding: 4rem 0 3rem; }
+}
+
+// ─── Fog ─────────────────────────────────────────────
+%fog {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact__fog1 {
+  @extend %fog;
+  width: 600px;
+  height: 600px;
+  bottom: -100px;
+  left: -100px;
+  background: radial-gradient(circle, rgba(g.$color-primary, 0.08) 0%, transparent 70%);
+  @include m.mq(sp) { width: 280px; height: 280px; }
+}
+
+.contact__fog2 {
+  @extend %fog;
+  width: 400px;
+  height: 400px;
+  top: 10%;
+  right: -80px;
+  background: radial-gradient(circle, rgba(g.$color-fog-light, 0.6) 0%, transparent 70%);
+  @include m.mq(sp) { width: 200px; height: 200px; }
+}
+
+// ─── Inner grid ──────────────────────────────────────
+.contact__inner {
+  position: relative;
+  z-index: g.$z-raised;
+  max-width: g.$container-max;
+  margin: 0 auto;
+  padding: 0 g.$container-padding-pc;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 5rem;
+  align-items: start;
+
+  @include m.mq(tab) {
+    padding: 0 g.$container-padding-tab;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+  }
+
+  @include m.mq(sp) {
+    padding: 0 g.$container-padding-sp;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// LEFT — Info column
+// ═══════════════════════════════════════════════════════
+
+.contact__info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @include m.mq-pc {
+    position: sticky;
+    top: calc(g.$nav-height-pc + 2rem);
+  }
+}
+
+.contact__eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.25rem 0.85rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-widest;
+  text-transform: uppercase;
+  color: g.$color-primary;
+  background: g.$color-primary-light;
+  border: 1px solid rgba(g.$color-primary, 0.2);
+}
+
+.contact__heading {
+  font-size: g.$text-display;
+  font-weight: g.$weight-bold;
+  letter-spacing: g.$tracking-tight;
+  color: g.$color-text-primary;
+  line-height: g.$leading-tight;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, g.$color-primary, rgba(g.$color-primary, 0.2));
+    border-radius: g.$radius-full;
+    margin-top: 0.75rem;
+  }
+
+  @include m.mq(sp) { font-size: g.$text-2xl; }
+}
+
+.contact__subheading {
+  font-size: g.$text-md;
+  color: g.$color-text-secondary;
+  line-height: g.$leading-loose;
+  max-width: 42ch;
+
+  @include m.mq(sp) {
+    font-size: g.$text-base;
+    max-width: 100%;
+  }
+}
+
+// ─── Direct email ─────────────────────────────────────
+.contact__direct {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: g.$radius-lg;
+  @include m.glass(12px, 0.55);
+}
+
+.contact__direct_label {
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-widest;
+  text-transform: uppercase;
+  color: g.$color-text-muted;
+}
+
+.contact__direct_email {
+  font-size: g.$text-md;
+  font-weight: g.$weight-semibold;
+  color: g.$color-primary;
+  letter-spacing: g.$tracking-snug;
+  transition: color g.$transition-fast, opacity g.$transition-fast;
+
+  @include m.hover {
+    color: g.$color-primary-hover;
+    opacity: 0.85;
+  }
+}
+
+// ─── Social links ─────────────────────────────────────
+.contact__socials {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.contact__social {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: g.$radius-lg;
+  font-size: g.$text-sm;
+  font-weight: g.$weight-medium;
+  color: g.$color-text-secondary;
+  @include m.glass(10px, 0.50);
+  transition:
+    color g.$transition-fast,
+    background g.$transition-fast,
+    border-color g.$transition-fast,
+    transform g.$transition-spring;
+
+  svg {
+    color: g.$color-text-muted;
+    transition: color g.$transition-fast;
+    flex-shrink: 0;
+  }
+
+  @include m.hover {
+    color: g.$color-primary;
+    background: rgba(255, 255, 255, 0.75);
+    border-color: rgba(g.$color-primary, 0.25);
+    transform: translateX(4px);
+
+    svg { color: g.$color-primary; }
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// RIGHT — Form
+// ═══════════════════════════════════════════════════════
+
+.contact__form_wrap {
+  @include m.glass(20px, 0.65);
+  border-radius: g.$radius-xl;
+  padding: 2.25rem;
+
+  @include m.mq(sp) { padding: 1.5rem; }
+}
+
+// ─── Form ────────────────────────────────────────────
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+// Side-by-side row (company + name)
+.form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @include m.mq(sp) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Individual field ────────────────────────────────
+.form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: transform g.$transition-fast;
+
+  &--focused {
+    .form__input,
+    .form__textarea {
+      border-color: g.$color-border-focus;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: g.$shadow-inset, 0 0 0 3px rgba(g.$color-primary, 0.08);
+    }
+
+    .form__label {
+      color: g.$color-primary;
+    }
+  }
+}
+
+.form__label {
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-wide;
+  color: g.$color-text-secondary;
+  transition: color g.$transition-fast;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.form__required {
+  color: g.$color-primary;
+  font-size: g.$text-xs;
+}
+
+// ─── Input / Textarea shared base ────────────────────
+%input-base {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: g.$radius-md;
+  font-family: g.$font-sans;
+  font-size: g.$text-sm;
+  font-weight: g.$weight-regular;
+  color: g.$color-text-primary;
+  background: g.$color-glass-subtle;
+  border: 1px solid g.$color-border;
+  backdrop-filter: blur(8px);
+  transition:
+    border-color g.$transition-fast,
+    background g.$transition-fast,
+    box-shadow g.$transition-fast;
+  outline: none;
+  appearance: none;
+
+  &::placeholder {
+    color: g.$color-text-muted;
+    font-weight: g.$weight-regular;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.form__input {
+  @extend %input-base;
+  height: 44px;
+}
+
+.form__textarea {
+  @extend %input-base;
+  resize: vertical;
+  min-height: 130px;
+  line-height: g.$leading-normal;
+}
+
+// ─── Submit button ───────────────────────────────────
+.form__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.875rem 2rem;
+  border-radius: g.$radius-full;
+  font-family: g.$font-sans;
+  font-size: g.$text-sm;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-wide;
+  color: g.$color-text-inverse;
+  background: g.$color-primary;
+  border: 1px solid transparent;
+  cursor: pointer;
+  box-shadow: g.$shadow-md, g.$shadow-glow;
+  transition:
+    background g.$transition-base,
+    box-shadow g.$transition-glass,
+    transform g.$transition-spring;
+
+  @include m.hover {
+    background: g.$color-primary-hover;
+    box-shadow: g.$shadow-lg, 0 0 40px rgba(g.$color-primary, 0.35);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &--loading {
+    opacity: 0.75;
+    cursor: not-allowed;
+    transform: none;
+
+    @include m.hover {
+      transform: none;
+      background: g.$color-primary;
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  // Arrow icon
+  svg {
+    transition: transform g.$transition-spring;
+  }
+
+  @include m.hover {
+    svg { transform: translateX(3px); }
+  }
+}

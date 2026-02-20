@@ -8,7 +8,7 @@ type TypingTextProps = {
   className?: string; // 'p', 'h1', 'span', etc.
 };
 
-export const TypingText = ({ text = "", speed = 100, tag: Tag = "p", className="" }: TypingTextProps) => {
+export const TypingText = ({ text = "", speed = 100, tag: tag = "p", className="" }: TypingTextProps) => {
   const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const TypingText = ({ text = "", speed = 100, tag: Tag = "p", className="
     return () => clearInterval(interval);
   }, [text, speed]);
 
-  const MotionTag = motion(Tag);
+  const MotionTag = motion(tag);
 
   return (
     <MotionTag

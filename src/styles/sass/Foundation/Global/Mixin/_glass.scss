@@ -1,0 +1,56 @@
+// ═══════════════════════════════════════════════════════
+// GLASS MIXINS
+// Frosted glass surface system
+// ═══════════════════════════════════════════════════════
+@use '../Variable' as v;
+@use 'responsiveness' as r;
+
+// ─── Base glass surface ──────────────────────────────
+// The standard frosted card / panel
+@mixin glass($blur: 16px, $opacity: 0.60) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur($blur) saturate(1.6);
+  -webkit-backdrop-filter: blur($blur) saturate(1.6);
+  border: 1px solid v.$color-glass-border;
+  box-shadow: v.$shadow-inset, v.$shadow-md;
+}
+
+// ─── Strong glass (nav, modals) ──────────────────────
+@mixin glass-strong($blur: 24px) {
+  background: v.$color-glass-strong;
+  backdrop-filter: blur($blur) saturate(1.8);
+  -webkit-backdrop-filter: blur($blur) saturate(1.8);
+  border: 1px solid v.$color-glass-border;
+  box-shadow: v.$shadow-inset, v.$shadow-lg;
+}
+
+// ─── Subtle glass (section backgrounds) ─────────────
+@mixin glass-subtle($blur: 10px) {
+  background: v.$color-glass-subtle;
+  backdrop-filter: blur($blur) saturate(1.4);
+  -webkit-backdrop-filter: blur($blur) saturate(1.4);
+  border: 1px solid v.$color-glass-border-subtle;
+}
+
+// ─── Tinted glass (accent panels) ───────────────────
+@mixin glass-tinted($blur: 16px) {
+  background: v.$color-glass-tinted;
+  backdrop-filter: blur($blur) saturate(1.6);
+  -webkit-backdrop-filter: blur($blur) saturate(1.6);
+  border: 1px solid v.$color-border;
+  box-shadow: v.$shadow-inset, v.$shadow-sm;
+}
+
+// ─── Glass hover state ───────────────────────────────
+@mixin glass-hover {
+  transition:
+    background v.$transition-glass,
+    box-shadow v.$transition-glass,
+    border-color v.$transition-glass;
+
+  @include r.hover {
+    background: v.$color-glass-strong;
+    box-shadow: v.$shadow-inset, v.$shadow-lg, v.$shadow-glow;
+    border-color: v.$color-border-strong;
+  }
+}

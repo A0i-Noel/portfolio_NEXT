@@ -1,0 +1,58 @@
+// ═══════════════════════════════════════════════════════
+// SECTION MODULE
+// ═══════════════════════════════════════════════════════
+@use '@/styles/sass/Foundation/Global' as g;
+@use '@/styles/sass/Foundation/Global/Mixin' as m;
+
+.section {
+  position: relative;
+  padding: 8rem 0;
+  overflow: hidden;
+
+  @include m.mq(tab) {
+    padding: 6rem 0;
+  }
+
+  @include m.mq(sp) {
+    padding: 4rem 0;
+  }
+
+  &--flush {
+    padding: 0;
+  }
+
+  // Tinted alternate section — subtle glass feel
+  &--tinted {
+    background: g.$color-glass-tinted;
+
+    // Soft top/bottom dividers
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: g.$color-border;
+    }
+
+    &::before { top: 0; }
+    &::after  { bottom: 0; }
+  }
+}
+
+.section__container {
+  position: relative;
+  z-index: g.$z-raised;
+  max-width: g.$container-max;
+  margin: 0 auto;
+  padding: 0 g.$container-padding-pc;
+
+  @include m.mq(tab) {
+    padding: 0 g.$container-padding-tab;
+  }
+
+  @include m.mq(sp) {
+    padding: 0 g.$container-padding-sp;
+  }
+}

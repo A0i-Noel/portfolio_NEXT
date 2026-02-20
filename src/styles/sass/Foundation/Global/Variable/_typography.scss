@@ -1,0 +1,47 @@
+// ═══════════════════════════════════════════════════════
+// TYPOGRAPHY VARIABLES
+// ═══════════════════════════════════════════════════════
+
+// ─── Font families ───────────────────────────────────
+// DM Sans: clean geometric humanist — great for both EN + JP feel
+// Noto Sans JP: seamless Japanese fallback that matches DM Sans rhythm
+// JetBrains Mono: for code snippets in projects section
+$font-sans:  'DM Sans', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+// ─── Font sizes ──────────────────────────────────────
+$text-xs:   0.75rem;    //  12px
+$text-sm:   0.875rem;   //  14px
+$text-base: 1rem;       //  16px
+$text-md:   1.125rem;   //  18px
+$text-lg:   1.25rem;    //  20px
+$text-xl:   1.5rem;     //  24px
+$text-2xl:  2rem;       //  32px
+$text-3xl:  2.5rem;     //  40px
+$text-4xl:  3.5rem;     //  56px
+
+// Fluid / responsive display sizes
+$text-hero:    clamp(2.75rem, 6vw, 5rem);   // hero title
+$text-display: clamp(2rem, 4vw, 3.5rem);    // section display
+$text-title:   clamp(1.5rem, 2.5vw, 2rem);  // sub-title
+
+// ─── Font weights ────────────────────────────────────
+$weight-regular:  400;
+$weight-medium:   500;
+$weight-semibold: 600;
+$weight-bold:     700;
+
+// ─── Line heights ────────────────────────────────────
+$leading-none:   1.0;
+$leading-tight:  1.2;
+$leading-snug:   1.4;
+$leading-normal: 1.6;
+$leading-loose:  1.8;
+
+// ─── Letter spacing ──────────────────────────────────
+$tracking-tight:  -0.03em;
+$tracking-snug:   -0.01em;
+$tracking-normal:  0;
+$tracking-wide:    0.04em;
+$tracking-wider:   0.08em;
+$tracking-widest:  0.15em; // for eyebrow labels / ALL CAPS tags

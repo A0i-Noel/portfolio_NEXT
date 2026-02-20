@@ -1,0 +1,183 @@
+// ═══════════════════════════════════════════════════════
+// HEADER — Frosted glass sticky nav
+// ═══════════════════════════════════════════════════════
+@use '@/styles/sass/Foundation/Global' as g;
+@use '@/styles/sass/Foundation/Global/Mixin' as m;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: g.$z-nav;
+  height: g.$nav-height-pc;
+
+  @include m.glass-strong(20px);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid g.$color-border;
+
+  transition:
+    background g.$transition-glass,
+    box-shadow g.$transition-glass,
+    border-color g.$transition-glass;
+
+  &--scrolled {
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: g.$shadow-md;
+  }
+
+  @include m.mq(sp) {
+    height: g.$nav-height-sp;
+  }
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: g.$container-max;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 g.$container-padding-pc;
+
+  @include m.mq(tab) { padding: 0 g.$container-padding-tab; }
+  @include m.mq(sp)  { padding: 0 g.$container-padding-sp; }
+}
+
+// ─── Logo ─────────────────────────────────────────────
+.header__logo {
+  font-size: g.$text-lg;
+  font-weight: g.$weight-bold;
+  letter-spacing: g.$tracking-tight;
+  color: g.$color-text-primary;
+  transition: color g.$transition-fast;
+
+  span { color: g.$color-primary; }
+
+  @include m.hover { color: g.$color-primary; }
+}
+
+// ─── Desktop nav ──────────────────────────────────────
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  @include m.mq(sp) { display: none; }
+}
+
+// Matches styles.header__nav_link in TSX
+.header__nav_link {
+  position: relative;
+  padding: 0.4rem 0.75rem;
+  font-size: g.$text-sm;
+  font-weight: g.$weight-medium;
+  color: g.$color-text-secondary;
+  border-radius: g.$radius-full;
+  transition: color g.$transition-base, background g.$transition-base;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 16px;
+    height: 2px;
+    border-radius: g.$radius-full;
+    background: g.$color-primary;
+    transition: transform g.$transition-spring;
+  }
+
+  @include m.hover {
+    color: g.$color-text-primary;
+    background: g.$color-primary-light;
+  }
+
+  // Matches styles['header__nav_link--active'] in TSX
+  &--active {
+    color: g.$color-primary;
+    font-weight: g.$weight-semibold;
+
+    &::after { transform: translateX(-50%) scaleX(1); }
+  }
+}
+
+// ─── Right actions ────────────────────────────────────
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+// ─── Hamburger — matches styles.header__menu_btn in TSX ──
+.header__menu_btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 0.5rem;
+  border-radius: g.$radius-sm;
+  transition: background g.$transition-fast;
+
+  @include m.mq(sp) { display: flex; }
+
+  @include m.hover { background: g.$color-primary-light; }
+
+  span {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: g.$color-text-primary;
+    border-radius: g.$radius-full;
+    transition: transform g.$transition-spring, opacity g.$transition-fast;
+    transform-origin: center;
+  }
+
+  // Matches styles['header__menu_btn--open'] in TSX
+  &--open {
+    span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  }
+}
+
+// ─── Mobile drawer — matches styles.header__mobile_nav ──
+.header__mobile_nav {
+  position: fixed;
+  top: g.$nav-height-sp;
+  left: 0;
+  right: 0;
+  z-index: g.$z-overlay;
+  padding: 1rem g.$container-padding-sp 2rem;
+
+  @include m.glass-strong(24px);
+  border-top: 1px solid g.$color-border;
+  border-left: none;
+  border-right: none;
+}
+
+// Matches styles.header__mobile_link in TSX
+.header__mobile_link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.85rem 0.5rem;
+  font-size: g.$text-md;
+  font-weight: g.$weight-medium;
+  color: g.$color-text-secondary;
+  border-bottom: 1px solid g.$color-border-muted;
+  transition: color g.$transition-fast;
+
+  &:last-child { border-bottom: none; }
+
+  // Matches styles['header__mobile_link--active'] in TSX
+  &--active {
+    color: g.$color-primary;
+    font-weight: g.$weight-semibold;
+  }
+}

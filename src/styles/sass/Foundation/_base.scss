@@ -1,101 +1,115 @@
-@import "./Global/index";
+// ═══════════════════════════════════════════════════════
+// BASE STYLES
+// Global element defaults using design tokens
+// ═══════════════════════════════════════════════════════
+@use 'Global' as g;
 
-html,
-body,
-*,
-main,
-.root {
-  box-sizing: border-box;
-  font-size: 14px;
+// ─── Body ────────────────────────────────────────────
+body {
+  font-family: g.$font-sans;
+  font-size: g.$text-base;
+  font-weight: g.$weight-regular;
+  line-height: g.$leading-normal;
+  color: g.$color-text-primary;
+  background-color: g.$color-bg;
+
+  // Ambient background — the fog layer everything sits on top of
+  background-image:
+    // Soft radial fog blobs using primary tint
+    radial-gradient(
+      ellipse 80% 60% at 20% 10%,
+      rgba(g.$color-primary, 0.07) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 85% 30%,
+      rgba(g.$color-primary, 0.05) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 70% 60% at 50% 90%,
+      rgba(g.$color-primary, 0.06) 0%,
+      transparent 60%
+    );
+  background-attachment: fixed;
 }
 
-html {
-  background-image: linear-gradient(to right,$black,$offBlack);
-  
+// ─── Headings ────────────────────────────────────────
+h1, h2, h3, h4, h5, h6 {
+  font-family: g.$font-sans;
+  font-weight: g.$weight-bold;
+  line-height: g.$leading-tight;
+  color: g.$color-text-primary;
+  letter-spacing: g.$tracking-tight;
 }
 
+h1 { font-size: g.$text-hero; }
+h2 { font-size: g.$text-display; }
+h3 { font-size: g.$text-title; }
+h4 { font-size: g.$text-xl; }
+h5 { font-size: g.$text-lg; }
+h6 { font-size: g.$text-md; }
 
-h1,h2,h3,h4,h5,h6,p,a {
-  color: $white;
+// ─── Body text ───────────────────────────────────────
+p {
+  color: g.$color-text-secondary;
+  line-height: g.$leading-loose;
+  max-width: 70ch; // optimal reading width
 }
 
-h1{
-  font-size: clamp(44px, 4vw, 48px);
-  line-height: clamp(52px, 4vw, 56px);
-  font-weight: clamp(500, 600, 700);
-}
-
-h2{
-  font-size: clamp(36px, 4vw, 40px);
-  line-height: clamp(40px, 4vw, 44px);
-  font-weight: clamp(400, 500, 700);
-
-}
-
-h3{
-  font-size: clamp(28px, 4vw, 32px);
-  line-height: clamp(32px, 4vw, 36px);
-  font-weight: clamp(300, 400, 500);
-}
-
-h4{
-  font-size: clamp(24px, 4vw, 28px);
-  line-height: clamp(28px, 4vw, 32px);
-  font-weight: clamp(300, 400, 500);
-}
-h5{
-  font-size: clamp(20px, 4vw, 24px);
-  line-height: clamp(24px, 4vw, 28px);
-  font-weight: clamp(300, 400, 500);
-
-}
-h6{
-
-  font-size: clamp(16px, 4vw, 20px);
-  line-height: clamp(18px, 4vw, 24px);
-  font-weight: clamp(300, 400, 500);
-}
-
-p{
-  font-size: clamp(12px, 4vw, 16px);
-  line-height: clamp(18px, 4vw, 24px);
-}
-
-b{
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
-}
-
+// ─── Links ───────────────────────────────────────────
 a {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+  color: g.$color-text-accent;
+  transition: color g.$transition-fast, opacity g.$transition-fast;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: g.$color-primary-hover;
+    }
+  }
 }
 
-
-i{
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
+// ─── Code ────────────────────────────────────────────
+code, kbd, pre {
+  font-family: g.$font-mono;
+  font-size: g.$text-sm;
 }
 
+code {
+  background: g.$color-primary-light;
+  color: g.$color-primary;
+  padding: 0.15em 0.45em;
+  border-radius: g.$radius-xs;
+}
+
+// ─── HR ──────────────────────────────────────────────
+hr {
+  border: none;
+  border-top: 1px solid g.$color-border;
+  margin: 2rem 0;
+}
+
+// ─── Selection ───────────────────────────────────────
+::selection {
+  background: rgba(g.$color-primary, 0.15);
+  color: g.$color-text-primary;
+}
+
+// ─── Scrollbar (webkit) ──────────────────────────────
+// Subtle thin scrollbar that matches the glass palette
 ::-webkit-scrollbar {
-  width: 1px;
-  margin-left: 20px;
-  height: 1px;
+  width: 6px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-  background-color: #fafafa;
+  background: g.$color-bg;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
-  -webkit-text-fill-color: $white !important;
-  transition: background-color 5000s ease-in-out 0s;
+::-webkit-scrollbar-thumb {
+  background: g.$color-border-strong;
+  border-radius: g.$radius-full;
+
+  &:hover {
+    background: rgba(g.$color-primary, 0.35);
+  }
 }

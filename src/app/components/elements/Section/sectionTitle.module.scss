@@ -1,0 +1,71 @@
+@use '@/styles/sass/Foundation/Global' as g;
+@use '@/styles/sass/Foundation/Global/Mixin' as m;
+
+.sectionTitle {
+  margin-bottom: 3.5rem;
+
+  @include m.mq(sp) {
+    margin-bottom: 2.5rem;
+  }
+
+  &--center {
+    text-align: center;
+
+    .sectionTitle__heading::after {
+      margin: 0.75rem auto 0;
+    }
+
+    p {
+      margin: 0 auto;
+    }
+  }
+}
+
+// Eyebrow — small all-caps label
+.sectionTitle__eyebrow {
+  display: inline-block;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-widest;
+  text-transform: uppercase;
+  color: g.$color-primary;
+  margin-bottom: 0.75rem;
+
+  // Pill background
+  background: g.$color-primary-light;
+  padding: 0.25rem 0.75rem;
+  border-radius: g.$radius-full;
+  border: 1px solid rgba(g.$color-primary, 0.15);
+}
+
+.sectionTitle__heading {
+  font-size: g.$text-display;
+  font-weight: g.$weight-bold;
+  color: g.$color-text-primary;
+  letter-spacing: g.$tracking-tight;
+  line-height: g.$leading-tight;
+  margin-bottom: 0;
+
+  // Animated underline accent
+  &::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      g.$color-primary 0%,
+      rgba(g.$color-primary, 0.2) 100%
+    );
+    border-radius: g.$radius-full;
+    margin-top: 0.75rem;
+  }
+}
+
+.sectionTitle__subtitle {
+  font-size: g.$text-md;
+  color: g.$color-text-secondary;
+  line-height: g.$leading-loose;
+  max-width: 55ch;
+  margin-top: 1rem;
+}

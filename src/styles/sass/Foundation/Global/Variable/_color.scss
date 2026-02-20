@@ -1,12 +1,53 @@
+// ═══════════════════════════════════════════════════════
+// COLOR VARIABLES
+// Frosted glass · Foggy mood · Clean impression
+// ═══════════════════════════════════════════════════════
 
-$primary: #9ABDDC;
-$secondary: #e5f3fd;
-$tertiary: #b49ef4;
+// ─── Brand ───────────────────────────────────────────
+$color-primary:        #6366F1;
+$color-primary-hover:  #4F52D9;
+$color-primary-active: #3B3EBF;
+$color-primary-light:  rgba(99, 102, 241, 0.08);
+$color-primary-glow:   rgba(99, 102, 241, 0.20);
+$color-primary-rgb:    99, 102, 241; // for rgba() usage
 
-$white: #ffffff;
-$offWhite : #f5f5f5;
+// ─── Background ──────────────────────────────────────
+// Slightly cool white to support the foggy mood
+$color-bg:             #F7F8FC;
+$color-bg-deep:        #EDEEF6; // subtle depth behind sections
 
-$black: #000000;
-$offBlack: #303030;
+// ─── Glass surfaces ───────────────────────────────────
+// These are the core of the frosted glass system.
+// Use with backdrop-filter: blur() on the element itself.
+$color-glass:          rgba(255, 255, 255, 0.60);
+$color-glass-strong:   rgba(255, 255, 255, 0.80);
+$color-glass-subtle:   rgba(255, 255, 255, 0.35);
+$color-glass-tinted:   rgba(99, 102, 241, 0.05); // faint primary tint
+$color-glass-border:   rgba(255, 255, 255, 0.55);
+$color-glass-border-subtle: rgba(255, 255, 255, 0.30);
 
-$neutral: #979797
+// ─── Fog / mist overlays ─────────────────────────────
+// For section dividers, ambient blobs, mesh gradients
+$color-fog-light:      rgba(214, 217, 255, 0.35); // lavender mist
+$color-fog-mid:        rgba(180, 185, 245, 0.20);
+$color-fog-accent:     rgba(99, 102, 241, 0.12);
+
+// ─── Text ────────────────────────────────────────────
+$color-text-primary:   #1A1B2E; // deep indigo-tinted near-black
+$color-text-secondary: #5C5F7A; // muted purple-grey
+$color-text-muted:     #9496B0; // soft muted for placeholders, captions
+$color-text-inverse:   #FFFFFF;
+$color-text-accent:    $color-primary;
+
+// ─── Border ──────────────────────────────────────────
+$color-border:         rgba(99, 102, 241, 0.12);
+$color-border-muted:   rgba(99, 102, 241, 0.06);
+$color-border-strong:  rgba(99, 102, 241, 0.25);
+$color-border-focus:   $color-primary;
+
+// ─── Semantic ────────────────────────────────────────
+$color-success:        #10B981;
+$color-warning:        #F59E0B;
+$color-error:          #EF4444;
+$color-success-light:  rgba(16, 185, 129, 0.10);
+$color-error-light:    rgba(239, 68, 68, 0.10);
