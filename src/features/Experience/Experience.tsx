@@ -84,7 +84,7 @@ const EXPERIENCES: ExperienceItem[] = [
         'CTOとして全技術スタックを担当（アーキテクチャ・スプリント計画・コードレビュー・プロダクトロードマップ）し、COOとしてビジネスと開発の整合を図った。',
       ],
     },
-    tags: ['React', 'Node.js', 'Agile', 'Leadership', 'TypeScript'],
+    tags: ['React', 'Node.js', 'Agile', 'Leadership', 'TypeScript', 'MapBox'],
   },
   {
     id: 'ta-cs',

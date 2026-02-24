@@ -38,7 +38,7 @@ const PROJECTS: Project[] = [
     },
     thumbnail: '/images/subitt.jpg',
     tags: ['React', 'Next.js', 'Sass'],
-    status: 'live',
+    status: 'unavailable',
     url : "https://subitt.io/"
   },
   {
@@ -50,7 +50,7 @@ const PROJECTS: Project[] = [
       JPN: 'Subittプラットフォームのネイティブモバイルアプリ。外出先でサブスクリプション管理と顧客エンゲージメントを実現。',
     },
     thumbnail: '/images/subitt.jpg',
-    tags: ['React Native', 'Expo', 'Node.js'],
+    tags: ['React Native', 'Expo', 'MapBox'],
     status: 'unavailable',
   },
   {
