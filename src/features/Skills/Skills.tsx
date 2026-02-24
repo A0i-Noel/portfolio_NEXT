@@ -40,6 +40,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'Next.js',      level: 'core' },
       { name: 'React Native', level: 'proficient' },
       { name: 'Expo',         level: 'proficient' },
+      { name: 'MapBox',       level: 'proficient' },
       { name: 'p5.js',        level: 'familiar' },
       { name: 'Spline 3D',    level: 'familiar' },
     ],

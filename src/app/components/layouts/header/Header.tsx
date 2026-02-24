@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { id: 'hero',       label: { en: 'Home',       ja: 'ホーム' } },
   { id: 'about',      label: { en: 'About',      ja: '自己紹介' } },
   { id: 'experience', label: { en: 'Experience', ja: '経歴' } },
+  { id: 'awards', label: { en: 'Awards', ja: '受賞歴' } },
   { id: 'skills',     label: { en: 'Skills',     ja: 'スキル' } },
   { id: 'projects',   label: { en: 'Projects',   ja: 'プロジェクト' } },
   { id: 'contact',    label: { en: 'Contact',    ja: '連絡先' } },
