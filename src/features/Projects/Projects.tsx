@@ -79,6 +79,19 @@ const PROJECTS: Project[] = [
     status: 'live',
     url : "https://www.makewithgrid.com/"
   },
+  {
+  id: 'orbit',
+  title: 'Orbit',
+  subtitle: { EN: 'Founder cognition engine', JPN: '創業者向け認知エンジン' },
+  description: {
+    EN:  'Forces evidence-backed decisions before resources are committed — exposing blind spots, stress-testing assumptions, and accelerating how fast founders learn from reality. Orbit kills illusion, not ambition.',
+    JPN: 'リソースを投入する前に、根拠ある意思決定を強制するツール。思い込みを検証し、ブラインドスポットを可視化することで、創業者が現実から学ぶ速度を上げる。錯覚を排除し、野心は守る。',
+  },
+  thumbnail: '/images/orbit.png',
+  tags: ['Next.js', 'Supabase', 'Postgres', 'Claude API'],
+  status: 'live',
+  url: 'https://orbit-app-nu.vercel.app/',
+},
 ]
 
 // ─── Status config ────────────────────────────────────
