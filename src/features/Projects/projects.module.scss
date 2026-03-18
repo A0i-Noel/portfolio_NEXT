@@ -117,6 +117,45 @@
   @include m.mq(sp)  { grid-template-columns: 1fr; }
 }
 
+// ─── Playground label ────────────────────────────────
+.projects__playground_label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0 1.5rem;
+
+  span {
+    font-size: g.$text-xs;
+    font-weight: g.$weight-semibold;
+    letter-spacing: g.$tracking-widest;
+    text-transform: uppercase;
+    color: g.$color-text-muted;
+    white-space: nowrap;
+  }
+
+  hr {
+    flex: 1;
+    height: 1px;
+    border: none;
+    background: g.$color-border;
+  }
+}
+
+// ─── Playground grid ─────────────────────────────────
+.projects__playground_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  opacity: 0.85;
+  transition: opacity g.$transition-fast;
+
+  &:hover { opacity: 1; }
+
+  @include m.mq(tab) { grid-template-columns: repeat(2, 1fr); }
+  @include m.mq(sp)  { grid-template-columns: 1fr; }
+}
+
 // ═══════════════════════════════════════════════════════
 // CARD
 // ═══════════════════════════════════════════════════════

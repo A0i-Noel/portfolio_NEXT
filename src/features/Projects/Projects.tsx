@@ -94,6 +94,23 @@ const PROJECTS: Project[] = [
 },
 ]
 
+// ─── Playground ───────────────────────────────────────
+const PLAYGROUND: Project[] = [
+  {
+    id: 'art-gallery',
+    title: 'Art Gallery',
+    subtitle: { EN: 'Public Domain Art Gallery', JPN: 'パブリックアートギャラリー' },
+    description: {
+      EN: 'Displays public domain artwork organized by era — built as a playground to test Antigravity, a new framework I was curious about.',
+      JPN: '時代別にパブリックドメインのアートを表示するアプリ。Antigravityというフレームワークを試すために作った実験作品。',
+    },
+    thumbnail: '/images/artGallery.png',
+    tags: ['Next.js', 'Antigravity'],
+    status: 'live',
+    url: 'https://art-gallary-antigravity-test1.vercel.app/',
+  },
+]
+
 // ─── Status config ────────────────────────────────────
 const STATUS_CONFIG: Record<ProjectStatus, {
   label: { EN: string; JPN: string }
@@ -257,6 +274,30 @@ export default function Projects() {
           viewport={{ once: true, margin: '-60px' }}
         >
           {PROJECTS.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              lang={language}
+            />
+          ))}
+        </motion.div>
+
+        {/* Playground divider */}
+        <div className={styles.projects__playground_label}>
+          <hr />
+          <span>{language === 'EN' ? 'Playground' : '遊び場'}</span>
+          <hr />
+        </div>
+
+        {/* Playground grid */}
+        <motion.div
+          className={styles.projects__playground_grid}
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+        >
+          {PLAYGROUND.map((project) => (
             <ProjectCard
               key={project.id}
               project={project}
