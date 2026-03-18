@@ -19,6 +19,20 @@ interface Award {
 // ─── Data ─────────────────────────────────────────────
 const AWARDS: Award[] = [
   {
+    id:   'podium-operator',
+    icon: '🤖',
+    tier: 'gold',
+    year: '2026',
+    title: {
+      EN:  'The Operator Award',
+      JPN: 'オペレーター賞',
+    },
+    event: {
+      EN:  'Podium AI Hackathon 2026',
+      JPN: 'Podium AIハッカソン 2026',
+    },
+  },
+  {
     id:   'iec-winner',
     icon: '🏆',
     tier: 'gold',
