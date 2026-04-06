@@ -17,28 +17,61 @@ interface ExperienceItem {
   bullets:  { EN: string[]; JPN: string[] }
   tags:     string[]
   images?:  { src: string; alt: string }[]
+  award?:   { EN: string; JPN: string }
   highlight?: boolean  // draws extra attention (founder roles)
   upcoming?: boolean   // "coming soon" treatment
 }
 
 // ─── Data ─────────────────────────────────────────────
 const EXPERIENCES: ExperienceItem[] = [
-  {
-    id: 'orbit',
-    role:    { EN: 'Next Project',                JPN: '次のプロジェクト' },
-    company: { EN: 'Orbit',                        JPN: 'Orbit' },
-    period:  { EN: 'Coming Soon',                  JPN: '近日公開' },
-    type:    { EN: 'Startup · In Development',     JPN: 'スタートアップ・開発中' },
-    upcoming: true,
+    {
+    id: 'SiteSniper',
+    role:    { EN: 'Builder',                   JPN: '開発者' },
+    company: { EN: 'SiteSniper',                JPN: 'SiteSniper' },
+    period:  { EN: '2026',                      JPN: '2026年' },
+    type:    { EN: 'Hackathon Project',         JPN: 'ハッカソンプロジェクト' },
+    highlight: true,
+    award: {
+      EN:  '🏆 The Operator Award — Podium AI Hackathon 2026',
+      JPN: '🏆 オペレーター賞 — Podium AIハッカソン 2026',
+    },
+    images: [
+      { src: '/images/Operator.png', alt: 'SiteSniper — automated LP refactoring pipeline' },
+    ],
     bullets: {
       EN: [
-        '"Orbit exists to protect founders from their own blind spots by forcing evidence-backed startup decisions before resources are committed."',
+        'Built a fully automated website refactoring sales pipeline — zero human touchpoints from discovery to outreach.',
+        'The system scrapes target websites, assesses design and copy quality, analyzes the data with AI, builds a brand-new landing page, deploys it live, then sends a cold email to the business owner — all autonomously via n8n.',
+        'Leveraged Claude API for intelligent quality assessment and content generation, with n8n orchestrating the end-to-end workflow across scraping, building, deployment, and email delivery.',
       ],
       JPN: [
-        '「Orbitは、リソースが投入される前にエビデンスに基づいたスタートアップの意思決定を強制することで、創業者が自身のブラインドスポットから守られる存在です。」',
+        'ウェブサイトのリファクタリング営業を完全自動化したパイプラインを構築。発見からアウトリーチまで人の介入ゼロ。',
+        'ターゲットサイトをスクレイピングし、デザイン・コピーの品質を評価、AIで分析、新しいLPを生成・デプロイし、事業者へコールドメールを自動送信。n8nで全フローをオーケストレーション。',
+        'Claude APIで品質評価とコンテンツ生成を担い、n8nがスクレイピング・ビルド・デプロイ・メール送信のエンドツーエンドワークフローを統括。',
       ],
     },
-    tags: ['Validation', 'Founder Tools', 'AI'],
+    tags: ['Hackathon', 'Claude API', 'n8n', 'Next.js', 'Automation'],
+  },
+  {
+    id: 'orbit',
+    role:    { EN: 'Solo Development',                JPN: '個人開発' },
+    company: { EN: 'Orbit',                        JPN: 'Orbit' },
+    period:  { EN: 'Feb 2026 - Present',                  JPN: '2026年2月 - 現在' },
+    type:    { EN: 'Personal Project · AI learning',     JPN: '個人のプロジェクト・AI学習' },
+    upcoming: false,
+    bullets: {
+      EN: [
+        'Orbit is a cognitive engine that transforms founder intuition into structured, evidence-backed decisions before a single line of code is written.',
+        'It maps assumptions, forces systematic validation, and blocks execution until the evidence exists — replacing the illusion of progress with real learning velocity.',
+        "Orbit helps founders move faster by helping them move in the right direction."
+      ],
+      JPN: [
+        'Orbitは、コードを一行も書く前に、ファウンダーの直感を構造化された証拠に基づく意思決定へと変換する認知エンジンです。',
+        '仮説を可視化し、体系的な検証を強制し、証拠が存在するまで実行をブロックすることで、進捗の幻想を真の学習速度へと置き換えます。',
+        'Orbitはファウンダーを正しい方向へ動かし、速く動かすためのツールです。'
+      ],
+    },
+    tags: ['Validation', 'Founder Tools', 'Claude Sonnet, Haiku'],
   },
     {
     id: 'grid',
@@ -68,6 +101,10 @@ const EXPERIENCES: ExperienceItem[] = [
     period:  { EN: 'Oct 2022 – Apr 2025',         JPN: '2022年10月 – 2025年4月' },
     type:    { EN: 'Startup · Full-time',          JPN: 'スタートアップ・フルタイム' },
     highlight: true,
+    award: {
+      EN:  '🏆 International Entrepreneurship Challenge (IEC) Winner 2024',
+      JPN: '🏆 国際アントレプレナーシップチャレンジ (IEC) 優勝 2024',
+    },
     images: [
       { src: '/images/Team.jpg',   alt: 'Subitt team' },
       { src: '/images/winDay.JPG', alt: 'Subitt win day' },
@@ -168,7 +205,14 @@ function ExperienceCard({ item, lang }: { item: ExperienceItem; lang: Lang }) {
 
       <h3 className={styles.card__role}>{item.role[lang]}</h3>
 
-      {/* Images — Subitt only */}
+      {/* Award badge — shown when item has an award */}
+      {item.award && (
+        <div className={styles.card__award}>
+          {item.award[lang]}
+        </div>
+      )}
+
+      {/* Images */}
       {item.images && (
         <div className={styles.card__images}>
           {item.images.map((img) => (

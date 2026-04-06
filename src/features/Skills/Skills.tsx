@@ -61,6 +61,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'C#',            level: 'proficient' },
       { name: 'C++',           level: 'proficient' },
       { name: 'Postgres',      level: 'proficient' },
+      { name: 'n8n',           level: 'proficient' },
       { name: 'Supabase',      level: 'familiar' },
       { name: 'Cloudflare',    level: 'familiar' },
       { name: 'Heroku',        level: 'familiar' },
