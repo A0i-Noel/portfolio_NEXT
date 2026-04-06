@@ -283,6 +283,25 @@
   @include m.mq(sp) { font-size: g.$text-md; }
 }
 
+// ─── Award badge ─────────────────────────────────────
+.card__award {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: g.$tracking-wide;
+  color: #92670A;
+  background: rgba(#D4A017, 0.10);
+  border: 1px solid rgba(#D4A017, 0.35);
+  box-shadow: 0 0 16px rgba(#D4A017, 0.12);
+  line-height: 1;
+}
+
 // ─── Images (Subitt) ─────────────────────────────────
 .card__images {
   display: grid;
