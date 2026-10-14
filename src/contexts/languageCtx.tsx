@@ -1,27 +1,39 @@
 'use client'
 
-import { getCookies } from "@/functions/Internal/cookies";
 import { LanguageType, LanguageContextType } from "@/interface/language";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react"
+
+const STORAGE_KEY = 'lang';
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({children}: {children:ReactNode}) => {
   const [language, setLanguage] = useState<LanguageType>('EN');
 
+  // Restore the saved choice after mount (localStorage is client-only)
   useEffect(() => {
-    const getLang = async () => {
-      const savedLang = await getCookies("lang");
+    try {
+      const savedLang = localStorage.getItem(STORAGE_KEY);
       if (savedLang === 'EN' || savedLang === 'JPN') {
         setLanguage(savedLang);
       }
+    } catch {
+      // Storage blocked (private mode etc.) — stay on default
     }
-    getLang();
   }, []);
+
+  // Keep <html lang> in sync for screen readers and font selection
+  useEffect(() => {
+    document.documentElement.lang = language === 'JPN' ? 'ja' : 'en';
+  }, [language]);
 
   const toggleLanguage = (lang: LanguageType) => {
     setLanguage(lang);
-    localStorage.setItem('lang', lang);
+    try {
+      localStorage.setItem(STORAGE_KEY, lang);
+    } catch {
+      // Ignore — choice just won't persist
+    }
   }
 
   return (

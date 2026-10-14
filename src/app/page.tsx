@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import Hero from '@/features/Hero/Hero'
 import Header from './components/layouts/header/Header'
+import Footer from './components/layouts/footer/Footer'
 
 const About      = React.lazy(() => import('@/features/About/About'))
 const Experience = React.lazy(() => import('@/features/Experience/Experience'))
@@ -26,6 +27,7 @@ export default function Home() {
         <Suspense fallback={<SectionFallback />}><Projects /></Suspense>
         <Suspense fallback={<SectionFallback />}><Contact /></Suspense>
       </main>
+      <Footer />
     </>
   )
 }

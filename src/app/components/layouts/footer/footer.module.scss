@@ -1,0 +1,41 @@
+// ═══════════════════════════════════════════════════════
+// FOOTER — Single quiet line under Contact
+// ═══════════════════════════════════════════════════════
+@use '@/styles/sass/Foundation/Global' as g;
+@use '@/styles/sass/Foundation/Global/Mixin' as m;
+
+.footer {
+  border-top: 1px solid g.$color-border-muted;
+}
+
+.footer__inner {
+  max-width: g.$container-max;
+  margin: 0 auto;
+  padding: 2rem g.$container-padding-pc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  @include m.mq(tab) { padding: 2rem g.$container-padding-tab; }
+  @include m.mq(sp) {
+    padding: 1.5rem g.$container-padding-sp;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.footer__copy {
+  font-size: g.$text-sm;
+  color: g.$color-text-muted;
+}
+
+.footer__link {
+  font-size: g.$text-sm;
+  color: g.$color-text-secondary;
+  text-decoration: none;
+
+  @include m.hover {
+    color: g.$color-primary;
+  }
+}

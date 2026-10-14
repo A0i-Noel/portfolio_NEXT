@@ -1,20 +1,21 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence, type Variants } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useMotionValueEvent, type Variants } from 'framer-motion'
 import styles from './header.module.scss'
 import LanguageSwitch from '../../elements/LanguageSwitch'
+import { useLanguage } from '@/contexts/languageCtx'
 
 // ─── Nav items ───────────────────────────────────────
 // id maps to section id on the page (e.g. <section id="hero">)
 const NAV_ITEMS = [
-  { id: 'hero',       label: { en: 'Home',       ja: 'ホーム' } },
-  { id: 'about',      label: { en: 'About',      ja: '自己紹介' } },
-  { id: 'experience', label: { en: 'Experience', ja: '経歴' } },
-  { id: 'awards', label: { en: 'Awards', ja: '受賞歴' } },
-  { id: 'skills',     label: { en: 'Skills',     ja: 'スキル' } },
-  { id: 'projects',   label: { en: 'Projects',   ja: 'プロジェクト' } },
-  { id: 'contact',    label: { en: 'Contact',    ja: '連絡先' } },
+  { id: 'hero',       label: { EN: 'Home', JPN: 'ホーム' } },
+  { id: 'about',      label: { EN: 'About', JPN: '自己紹介' } },
+  { id: 'experience', label: { EN: 'Experience', JPN: '経歴' } },
+  { id: 'awards', label: { EN: 'Awards', JPN: '受賞歴' } },
+  { id: 'skills',     label: { EN: 'Skills', JPN: 'スキル' } },
+  { id: 'projects',   label: { EN: 'Projects', JPN: 'プロジェクト' } },
+  { id: 'contact',    label: { EN: 'Contact', JPN: '連絡先' } },
 ] as const
 
 type NavId = (typeof NAV_ITEMS)[number]['id']
@@ -44,21 +45,19 @@ const mobileLinkVariants: Variants = {
 }
 
 // ─── Component ───────────────────────────────────────
-interface HeaderProps {
-  lang?: 'en' | 'ja'
-}
-
-export default function Header({ lang = 'en' }: HeaderProps) {
+export default function Header() {
+  const { language: lang } = useLanguage()
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState<NavId>('hero')
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  // Scroll detection — add class when page scrolls past threshold
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 24)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  // Scroll detection — motion value updates outside React; we only set state
+  // when the threshold is actually crossed
+  const { scrollY } = useScroll()
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    const next = y > 24
+    setIsScrolled((prev) => (prev === next ? prev : next))
+  })
 
   // Intersection Observer — track which section is in view
   useEffect(() => {

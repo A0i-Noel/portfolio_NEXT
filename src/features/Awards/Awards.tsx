@@ -2,27 +2,29 @@
 
 import { useLanguage } from '@/contexts/languageCtx'
 import { motion, type Variants } from 'framer-motion'
+import type { IconType } from 'react-icons'
+import { PiMedal, PiRobot, PiStar, PiTicket, PiTrophy } from 'react-icons/pi'
 import styles from './awards.module.scss'
 
 // ─── Types ────────────────────────────────────────────
 type Lang = 'EN' | 'JPN'
 
 interface Award {
-  id:       string
-  icon:     string  // emoji trophy / medal
-  title:    { EN: string; JPN: string }
-  event:    { EN: string; JPN: string }
-  year:     string
-  tier:     'gold' | 'silver' | 'special'  // controls accent color
+  id:        string
+  Icon:      IconType
+  title:     { EN: string; JPN: string }
+  event:     { EN: string; JPN: string }
+  year:      string
+  featured?: boolean  // top wins get a large tile; the rest render as compact rows
 }
 
 // ─── Data ─────────────────────────────────────────────
 const AWARDS: Award[] = [
   {
-    id:   'podium-operator',
-    icon: '🤖',
-    tier: 'gold',
-    year: '2026',
+    id:       'podium-operator',
+    Icon:     PiRobot,
+    featured: true,
+    year:     '2026',
     title: {
       EN:  'The Operator Award',
       JPN: 'オペレーター賞',
@@ -33,10 +35,10 @@ const AWARDS: Award[] = [
     },
   },
   {
-    id:   'iec-winner',
-    icon: '🏆',
-    tier: 'gold',
-    year: '2024',
+    id:       'iec-winner',
+    Icon:     PiTrophy,
+    featured: true,
+    year:     '2024',
     title: {
       EN:  'Winner',
       JPN: '優勝',
@@ -48,12 +50,11 @@ const AWARDS: Award[] = [
   },
   {
     id:   'iec-tech',
-    icon: '🥇',
-    tier: 'gold',
+    Icon: PiMedal,
     year: '2024',
     title: {
-      EN:  '1st Place — Technology Category',
-      JPN: '1位 — テクノロジー部門',
+      EN:  '1st Place, Technology Category',
+      JPN: '1位・テクノロジー部門',
     },
     event: {
       EN:  'International Entrepreneurship Challenge (IEC)',
@@ -62,8 +63,7 @@ const AWARDS: Award[] = [
   },
   {
     id:   'trolley-house',
-    icon: '⭐',
-    tier: 'special',
+    Icon: PiStar,
     year: '2024',
     title: {
       EN:  'Special Recognition Award',
@@ -76,80 +76,75 @@ const AWARDS: Award[] = [
   },
   {
     id:   'bew-golden',
-    icon: '🎫',
-    tier: 'silver',
+    Icon: PiTicket,
     year: '2024',
     title: {
       EN:  'Golden Ticket',
       JPN: 'ゴールデンチケット',
     },
     event: {
-      EN:  '2024 Boise Entrepreneurship Week (BEW)',
-      JPN: '2024年ボイジー・アントレプレナーシップウィーク (BEW)',
+      EN:  'Boise Entrepreneurship Week (BEW) 2024',
+      JPN: 'ボイジー・アントレプレナーシップウィーク (BEW) 2024',
     },
   },
 ]
 
 // ─── Animation variants ───────────────────────────────
 const fadeUp: Variants = {
-  hidden:  { opacity: 0, y: 28 },
+  hidden:  { opacity: 0, y: 24 },
   visible: {
     opacity: 1, y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
   },
 }
 
 const stagger: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.08 } },
 }
 
-const iconBounce: Variants = {
-  hidden:  { scale: 0.5, opacity: 0 },
-  visible: {
-    scale: 1, opacity: 1,
-    transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] as const },
-  },
-}
-
-// ─── Award card ───────────────────────────────────────
-function AwardCard({ award, lang }: { award: Award; lang: Lang }) {
+// ─── Featured tile ────────────────────────────────────
+function FeaturedAward({ award, lang }: { award: Award; lang: Lang }) {
+  const { Icon } = award
   return (
-    <motion.div
-      className={`${styles.card} ${styles[`card--${award.tier}`]}`}
-      variants={fadeUp}
-    >
-      {/* Trophy icon */}
-      <motion.div
-        className={styles.card__icon}
-        variants={iconBounce}
-      >
-        <span role="img" aria-label="award icon">{award.icon}</span>
-      </motion.div>
+    <motion.article className={styles.featured} variants={fadeUp}>
+      <div className={styles.featured__top}>
+        <span className={styles.featured__icon} aria-hidden="true">
+          <Icon size={26} />
+        </span>
+        <span className={styles.featured__year}>{award.year}</span>
+      </div>
+      <h3 className={styles.featured__title}>{award.title[lang]}</h3>
+      <p className={styles.featured__event}>{award.event[lang]}</p>
+    </motion.article>
+  )
+}
 
-      {/* Year badge */}
-      <span className={styles.card__year}>{award.year}</span>
-
-      {/* Title */}
-      <h3 className={styles.card__title}>{award.title[lang]}</h3>
-
-      {/* Event */}
-      <p className={styles.card__event}>{award.event[lang]}</p>
-    </motion.div>
+// ─── Compact row ──────────────────────────────────────
+function AwardRow({ award, lang }: { award: Award; lang: Lang }) {
+  const { Icon } = award
+  return (
+    <motion.li className={styles.row} variants={fadeUp}>
+      <span className={styles.row__icon} aria-hidden="true">
+        <Icon size={20} />
+      </span>
+      <div className={styles.row__text}>
+        <h3 className={styles.row__title}>{award.title[lang]}</h3>
+        <p className={styles.row__event}>{award.event[lang]}</p>
+      </div>
+      <span className={styles.row__year}>{award.year}</span>
+    </motion.li>
   )
 }
 
 // ─── Main component ───────────────────────────────────
 export default function Awards() {
   const { language } = useLanguage()
+  const featured = AWARDS.filter((a) => a.featured)
+  const rest     = AWARDS.filter((a) => !a.featured)
 
   return (
     <section id="awards" className={styles.awards}>
-
-      {/* Fog blobs */}
-      <div className={styles.awards__fog1} aria-hidden="true" />
-      <div className={styles.awards__fog2} aria-hidden="true" />
-
       <div className={styles.awards__inner}>
 
         {/* Section title */}
@@ -160,9 +155,6 @@ export default function Awards() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <span className={styles.awards__eyebrow}>
-            {language === 'EN' ? 'Awards' : '受賞歴'}
-          </span>
           <h2 className={styles.awards__heading}>
             {language === 'EN' ? 'Recognition' : '受賞・表彰'}
           </h2>
@@ -173,17 +165,26 @@ export default function Awards() {
           </p>
         </motion.div>
 
-        {/* Award grid */}
         <motion.div
-          className={styles.awards__grid}
+          className={styles.awards__layout}
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
         >
-          {AWARDS.map((award) => (
-            <AwardCard key={award.id} award={award} lang={language} />
-          ))}
+          {/* Top wins */}
+          <div className={styles.awards__featured}>
+            {featured.map((award) => (
+              <FeaturedAward key={award.id} award={award} lang={language} />
+            ))}
+          </div>
+
+          {/* Everything else */}
+          <motion.ul className={styles.awards__list} variants={stagger}>
+            {rest.map((award) => (
+              <AwardRow key={award.id} award={award} lang={language} />
+            ))}
+          </motion.ul>
         </motion.div>
 
       </div>
