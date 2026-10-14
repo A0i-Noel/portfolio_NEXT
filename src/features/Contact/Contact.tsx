@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useLanguage } from '@/contexts/languageCtx'
 import { motion, type Variants } from 'framer-motion'
 import { FaGithubSquare, FaInstagramSquare, FaLinkedin } from 'react-icons/fa'
+import { PiArrowRight } from 'react-icons/pi'
 import toast from 'react-hot-toast'
 import emailjs from '@emailjs/browser'
 import styles from './contact.module.scss'
@@ -18,7 +19,6 @@ interface MailBody {
 
 // ─── Copy ─────────────────────────────────────────────
 const COPY = {
-  eyebrow:     { EN: 'Contact',          JPN: 'お問い合わせ' },
   heading:     { EN: "Let's Work Together", JPN: 'ご連絡ください' },
   subheading:  {
     EN:  "Have a project in mind, want to collaborate, or just want to say hello? I'd love to hear from you.",
@@ -155,9 +155,6 @@ export default function Contact() {
   return (
     <section id="contact" className={styles.contact}>
 
-      {/* Fog */}
-      <div className={styles.contact__fog1} aria-hidden="true" />
-      <div className={styles.contact__fog2} aria-hidden="true" />
 
       <div className={styles.contact__inner}>
 
@@ -169,9 +166,6 @@ export default function Contact() {
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
         >
-          <motion.span variants={fadeUp} className={styles.contact__eyebrow}>
-            {COPY.eyebrow[language]}
-          </motion.span>
 
           <motion.h2 variants={fadeUp} className={styles.contact__heading}>
             {COPY.heading[language]}
@@ -229,10 +223,11 @@ export default function Contact() {
             {/* Company + Name — side by side on desktop */}
             <div className={styles.form__row}>
               <div className={`${styles.form__field} ${focusedField === 'company' ? styles['form__field--focused'] : ''}`}>
-                <label className={styles.form__label}>
+                <label className={styles.form__label} htmlFor="contact-company">
                   {COPY.fields.company[language]}
                 </label>
                 <input
+                  id="contact-company"
                   type="text"
                   className={styles.form__input}
                   value={mailBody.company}
@@ -245,11 +240,12 @@ export default function Contact() {
               </div>
 
               <div className={`${styles.form__field} ${focusedField === 'name' ? styles['form__field--focused'] : ''}`}>
-                <label className={styles.form__label}>
+                <label className={styles.form__label} htmlFor="contact-name">
                   {COPY.fields.name[language]}
                   <span className={styles.form__required}>*</span>
                 </label>
                 <input
+                  id="contact-name"
                   type="text"
                   className={styles.form__input}
                   value={mailBody.name}
@@ -265,11 +261,12 @@ export default function Contact() {
 
             {/* Email */}
             <div className={`${styles.form__field} ${focusedField === 'email' ? styles['form__field--focused'] : ''}`}>
-              <label className={styles.form__label}>
+              <label className={styles.form__label} htmlFor="contact-email">
                 {COPY.fields.email[language]}
                 <span className={styles.form__required}>*</span>
               </label>
               <input
+                id="contact-email"
                 type="email"
                 className={styles.form__input}
                 value={mailBody.email}
@@ -284,11 +281,12 @@ export default function Contact() {
 
             {/* Message */}
             <div className={`${styles.form__field} ${focusedField === 'body' ? styles['form__field--focused'] : ''}`}>
-              <label className={styles.form__label}>
+              <label className={styles.form__label} htmlFor="contact-body">
                 {COPY.fields.message[language]}
                 <span className={styles.form__required}>*</span>
               </label>
               <textarea
+                id="contact-body"
                 className={styles.form__textarea}
                 value={mailBody.body}
                 placeholder={COPY.fields.messagePh[language]}
@@ -312,15 +310,7 @@ export default function Contact() {
                 : COPY.submit[language]
               }
               {!isSubmitting && (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path
-                    d="M2 8h12M9 3l5 5-5 5"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <PiArrowRight size={16} aria-hidden="true" />
               )}
             </button>
           </form>

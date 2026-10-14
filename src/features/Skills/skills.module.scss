@@ -1,44 +1,9 @@
 // ═══════════════════════════════════════════════════════
 // SKILLS — Categorized card grid
-// Glass cards · accent colors · skill level weights
+// Glass bento cards · single indigo accent · skill level weights
 // ═══════════════════════════════════════════════════════
 @use '@/styles/sass/Foundation/Global' as g;
 @use '@/styles/sass/Foundation/Global/Mixin' as m;
-
-// ─── Per-category accent color map ───────────────────
-// Each category gets its own tint while staying in the palette
-$accents: (
-  primary: (
-    color:  g.$color-primary,
-    light:  rgba(g.$color-primary, 0.08),
-    border: rgba(g.$color-primary, 0.20),
-    icon:   rgba(g.$color-primary, 0.15),
-  ),
-  teal: (
-    color:  #0EA5E9,
-    light:  rgba(#0EA5E9, 0.08),
-    border: rgba(#0EA5E9, 0.20),
-    icon:   rgba(#0EA5E9, 0.15),
-  ),
-  amber: (
-    color:  #F59E0B,
-    light:  rgba(#F59E0B, 0.08),
-    border: rgba(#F59E0B, 0.20),
-    icon:   rgba(#F59E0B, 0.15),
-  ),
-  violet: (
-    color:  #8B5CF6,
-    light:  rgba(#8B5CF6, 0.08),
-    border: rgba(#8B5CF6, 0.20),
-    icon:   rgba(#8B5CF6, 0.15),
-  ),
-  rose: (
-    color:  #F43F5E,
-    light:  rgba(#F43F5E, 0.08),
-    border: rgba(#F43F5E, 0.20),
-    icon:   rgba(#F43F5E, 0.15),
-  ),
-);
 
 // ─── Section shell ───────────────────────────────────
 .skills {
@@ -48,37 +13,6 @@ $accents: (
 
   @include m.mq(tab) { padding: 6rem 0; }
   @include m.mq(sp)  { padding: 4rem 0; }
-}
-
-// ─── Fog blobs ───────────────────────────────────────
-%fog {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.skills__fog1 {
-  @extend %fog;
-  width: 550px;
-  height: 550px;
-  top: 5%;
-  right: -100px;
-  background: radial-gradient(circle, rgba(g.$color-primary, 0.07) 0%, transparent 70%);
-
-  @include m.mq(sp) { width: 260px; height: 260px; }
-}
-
-.skills__fog2 {
-  @extend %fog;
-  width: 400px;
-  height: 400px;
-  bottom: 10%;
-  left: -80px;
-  background: radial-gradient(circle, rgba(#8B5CF6, 0.06) 0%, transparent 70%);
-
-  @include m.mq(sp) { width: 200px; height: 200px; }
 }
 
 // ─── Inner container ─────────────────────────────────
@@ -98,20 +32,6 @@ $accents: (
   margin-bottom: 3.5rem;
 
   @include m.mq(sp) { margin-bottom: 2.5rem; }
-}
-
-.skills__eyebrow {
-  display: inline-flex;
-  padding: 0.25rem 0.85rem;
-  border-radius: g.$radius-full;
-  font-size: g.$text-xs;
-  font-weight: g.$weight-semibold;
-  letter-spacing: g.$tracking-widest;
-  text-transform: uppercase;
-  color: g.$color-primary;
-  background: g.$color-primary-light;
-  border: 1px solid rgba(g.$color-primary, 0.2);
-  margin-bottom: 1rem;
 }
 
 .skills__heading {
@@ -145,37 +65,34 @@ $accents: (
   @include m.mq(sp) { font-size: g.$text-base; }
 }
 
+// ─── Level legend ────────────────────────────────────
+.skills__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+}
+
+.skills__legend_item {
+  display: flex;
+}
+
 // ─── Category grid ───────────────────────────────────
-// 3 columns on desktop, 2 on tablet, 1 on mobile
-// Frontend spans 2 cols since it has the most skills
+// Masonry via CSS columns: 12 categories of very different lengths pack
+// without empty cells. Reads top-to-bottom per column.
 .skills__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  column-count: 3;
+  column-gap: 1.25rem;
 
-  // Frontend card spans 2 columns — it's the largest category
-  & > *:first-child {
-    grid-column: span 2;
+  & > * {
+    break-inside: avoid;
+    margin-bottom: 1.25rem;
   }
 
-  // Languages card — naturally compact, single column fine
-  & > *:last-child {
-    grid-column: span 1;
-  }
-
-  @include m.mq(tab) {
-    grid-template-columns: repeat(2, 1fr);
-
-    & > *:first-child { grid-column: span 2; }
-    & > *:last-child  { grid-column: span 1; }
-  }
-
-  @include m.mq(sp) {
-    grid-template-columns: 1fr;
-
-    & > *:first-child,
-    & > *:last-child { grid-column: span 1; }
-  }
+  @include m.mq(tab) { column-count: 2; }
+  @include m.mq(sp)  { column-count: 1; }
 }
 
 // ═══════════════════════════════════════════════════════
@@ -200,34 +117,30 @@ $accents: (
   }
 
   @include m.mq(sp) { padding: 1.25rem; }
+
+  // Core-strength category
+  &--featured {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.75) 0%,
+      rgba(g.$color-primary, 0.06) 100%
+    );
+    border-color: rgba(g.$color-primary, 0.3);
+    box-shadow: g.$shadow-inset, g.$shadow-md, inset 3px 0 0 g.$color-primary;
+  }
 }
 
-// Generate accent variants from map
-@each $name, $values in $accents {
-  .category--#{$name} {
-    border-color: map-get($values, border);
-
-    .category__icon {
-      background: map-get($values, icon);
-      color: map-get($values, color);
-    }
-
-    .category__title {
-      color: map-get($values, color);
-    }
-
-    .skill--core {
-      background: map-get($values, light);
-      border-color: map-get($values, border);
-      color: map-get($values, color);
-    }
-
-    @include m.hover {
-      border-color: map-get($values, border);
-      box-shadow: g.$shadow-inset, g.$shadow-lg,
-        0 0 40px rgba(map-get($values, color), 0.08);
-    }
-  }
+.category__badge {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  letter-spacing: 0;
+  color: g.$color-text-inverse;
+  background: g.$color-primary;
 }
 
 // ─── Card header ─────────────────────────────────────
@@ -244,9 +157,9 @@ $accents: (
   width: 40px;
   height: 40px;
   border-radius: g.$radius-md;
-  font-size: 1.25rem;
   flex-shrink: 0;
-  // Color set by accent variant above
+  color: g.$color-primary;
+  background: g.$color-primary-light;
 }
 
 .category__title {
@@ -255,7 +168,7 @@ $accents: (
   letter-spacing: g.$tracking-snug;
   line-height: 1.2;
   margin-bottom: 0.25rem;
-  // Color set by accent variant above
+  color: g.$color-text-primary;
 }
 
 .category__desc {
@@ -296,10 +209,12 @@ $accents: (
     box-shadow: g.$shadow-sm;
   }
 
-  // Core — filled accent bg (set per category above)
+  // Core — filled indigo tint
   &--core {
     font-weight: g.$weight-semibold;
-    // background + border + color set by .category--{accent} .skill--core
+    background: g.$color-primary-light;
+    border-color: rgba(g.$color-primary, 0.22);
+    color: g.$color-primary;
   }
 
   // Proficient — subtle glass, muted text

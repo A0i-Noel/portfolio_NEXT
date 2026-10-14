@@ -113,25 +113,20 @@
   to   { transform: translate(20px, -30px) scale(1.1); }
 }
 
-// ─── Dot grid ────────────────────────────────────────
-.hero__grid {
+// ─── Interactive dot field (canvas) ──────────────────
+// Drawn by DotField.tsx. Edge mask keeps it soft around the borders.
+.hero__field {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
-  // SVG dot grid via background — subtle, doesn't need an image file
-  background-image: radial-gradient(
-    circle,
-    rgba(g.$color-primary, 0.18) 1px,
-    transparent 1px
-  );
-  background-size: 28px 28px;
   mask-image: radial-gradient(
-    ellipse 80% 80% at 50% 50%,
-    black 20%,
+    ellipse 85% 85% at 50% 50%,
+    black 35%,
     transparent 100%
   );
-  opacity: 0.5;
 }
 
 // ─── Inner layout ─────────────────────────────────────
@@ -209,20 +204,25 @@
   letter-spacing: g.$tracking-tight;
   line-height: g.$leading-none;
   color: g.$color-text-primary;
-
-  // Subtle gradient on the name itself
-  background: linear-gradient(
-    135deg,
-    g.$color-text-primary 0%,
-    g.$color-primary 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  user-select: none;     // triple-click is the easter egg, not a text selection
+  cursor: default;
+  // Room for letters that spring upward
+  padding-top: 0.1em;
+  margin-top: -0.1em;
 
   @include m.mq(sp) {
-    font-size: clamp(2.5rem, 10vw, 3.5rem);
+    font-size: clamp(2.5rem, 12vw, 3.5rem);
   }
+}
+
+.hero__name_letter {
+  display: inline-block;
+  will-change: transform;
+}
+
+.hero__name_space {
+  display: inline-block;
+  width: 0.28em;
 }
 
 // ─── Role title ───────────────────────────────────────
@@ -264,6 +264,8 @@
 %cta-base {
   display: inline-flex;
   align-items: center;
+  gap: 0.75rem;
+  white-space: nowrap;
   padding: 0.75rem 1.75rem;
   border-radius: g.$radius-full;
   font-size: g.$text-sm;
@@ -286,12 +288,30 @@
   background: g.$color-primary;
   color: g.$color-text-inverse;
   border: 1px solid transparent;
-  box-shadow: g.$shadow-md, g.$shadow-glow;
+  box-shadow: g.$shadow-md;
 
   @include m.hover {
     background: g.$color-primary-hover;
-    box-shadow: g.$shadow-lg, 0 0 40px rgba(g.$color-primary, 0.35);
+    box-shadow: g.$shadow-lg;
     transform: translateY(-2px);
+  }
+}
+
+.hero__cta--primary {
+  padding-right: 0.45rem;  // icon circle sits flush with the right edge
+}
+
+.hero__cta_icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: g.$radius-full;
+  background: rgba(255, 255, 255, 0.18);
+  transition: transform 500ms cubic-bezier(0.32, 0.72, 0, 1);
+
+  .hero__cta--primary:hover & {
+    transform: translateY(2px) scale(1.06);
   }
 }
 
@@ -311,61 +331,42 @@
   }
 }
 
-// ─── Tech tags ────────────────────────────────────────
-.hero__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.25rem;
-}
-
-.hero__tag {
-  padding: 0.25rem 0.75rem;
-  border-radius: g.$radius-full;
-  font-size: g.$text-xs;
-  font-weight: g.$weight-medium;
-  color: g.$color-text-secondary;
-  background: g.$color-glass-subtle;
-  border: 1px solid g.$color-border;
-  backdrop-filter: blur(8px);
-  letter-spacing: g.$tracking-wide;
-  transition: color g.$transition-fast, border-color g.$transition-fast;
-
-  @include m.hover {
-    color: g.$color-primary;
-    border-color: rgba(g.$color-primary, 0.3);
-  }
-}
-
 // ─── Floating glass card (right column) ───────────────
-.hero__card {
-  @include m.glass(20px, 0.65);
+// Stage gives perspective for the tilt; shell + core = double bezel
+.hero__card_stage {
+  perspective: 1100px;
+}
+
+.hero__card_shell {
+  padding: 6px;
   border-radius: g.$radius-xl;
+  background: rgba(g.$color-primary, 0.05);
+  border: 1px solid rgba(g.$color-primary, 0.10);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.hero__card {
+  @include m.glass(20px, 0.72);
+  position: relative;
+  overflow: hidden;
+  border-radius: calc(#{g.$radius-xl} - 6px);
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0;
-
-  // Soft top sheen (part of glass illusion)
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(
-      160deg,
-      rgba(255, 255, 255, 0.5) 0%,
-      transparent 60%
-    );
-    pointer-events: none;
-  }
-
-  // Position the pseudo above the content
-  position: relative;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7), g.$shadow-lg;
 
   @include m.mq(sp) {
-    padding: 1.5rem;
+    padding: 1.25rem 1.5rem;
   }
+}
+
+// Light that follows the cursor across the glass
+.hero__card_sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
 }
 
 .hero__card_row {
@@ -397,39 +398,51 @@
   background: g.$color-border-muted;
 }
 
-// ─── Scroll indicator ─────────────────────────────────
-.hero__scroll {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: g.$z-raised;
+// ─── Easter egg ──────────────────────────────────────
+// Content fades back so the dot-matrix message reads clearly
+.hero__inner {
+  transition: opacity 600ms cubic-bezier(0.32, 0.72, 0, 1),
+              transform 600ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.hero--secret .hero__inner {
+  opacity: 0.12;
+  transform: scale(0.985);
+  pointer-events: none;
+}
+
+// Fixed so it stays on screen even when the hero is taller than the viewport
+.hero__secret {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 2rem;
+  z-index: g.$z-float;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-
-  @include m.mq(sp) {
-    display: none;
-  }
+  justify-content: center;
+  padding: 0 g.$container-padding-sp;
+  pointer-events: none;
 }
 
-.hero__scroll_line {
-  display: block;
-  width: 1px;
-  height: 40px;
-  background: linear-gradient(
-    to bottom,
-    g.$color-primary,
-    transparent
-  );
+.hero__secret_text {
+  padding: 0.6rem 1.25rem;
   border-radius: g.$radius-full;
-  transform-origin: top;
+  font-size: g.$text-sm;
+  font-weight: g.$weight-semibold;
+  color: g.$color-primary-active;
+  background: g.$color-glass-strong;
+  border: 1px solid rgba(g.$color-primary, 0.2);
+  box-shadow: g.$shadow-md;
+  text-align: center;
+  max-width: none;
 }
 
-.hero__scroll_label {
-  font-size: g.$text-xs;
-  letter-spacing: g.$tracking-widest;
-  text-transform: uppercase;
-  color: g.$color-text-muted;
+// Fog drift is decoration only — freeze it for reduced-motion users
+@media (prefers-reduced-motion: reduce) {
+  .hero__fog--blob1,
+  .hero__fog--blob2,
+  .hero__fog--blob3,
+  .hero__status {
+    animation: none;
+  }
 }

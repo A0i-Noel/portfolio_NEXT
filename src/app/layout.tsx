@@ -1,17 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Noto_Sans_JP, JetBrains_Mono } from "next/font/google";
 import "../styles/sass/global.scss"
 import { LanguageProvider } from "@/contexts/languageCtx";
 import { Toaster } from 'react-hot-toast';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Fonts are self-hosted via next/font; SCSS reads them through these CSS variables
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const notoSansJP = Noto_Sans_JP({
+  variable: "--font-noto-jp",
+  weight: ["400", "500", "700"],
+  preload: false, // large CJK font — only fetched when Japanese glyphs render
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -37,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${dmSans.variable} ${notoSansJP.variable} ${jetBrainsMono.variable}`}>
         <LanguageProvider>
           <Toaster />
           {children}

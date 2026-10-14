@@ -15,37 +15,6 @@
   @include m.mq(sp)  { padding: 4rem 0; }
 }
 
-// ─── Fog blobs ───────────────────────────────────────
-%fog-base {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.experience__fog1 {
-  @extend %fog-base;
-  width: 500px;
-  height: 500px;
-  top: 10%;
-  left: -120px;
-  background: radial-gradient(circle, rgba(g.$color-primary, 0.07) 0%, transparent 70%);
-
-  @include m.mq(sp) { width: 250px; height: 250px; left: -80px; }
-}
-
-.experience__fog2 {
-  @extend %fog-base;
-  width: 400px;
-  height: 400px;
-  bottom: 15%;
-  right: -80px;
-  background: radial-gradient(circle, rgba(g.$color-fog-light, 0.5) 0%, transparent 70%);
-
-  @include m.mq(sp) { width: 200px; height: 200px; }
-}
-
 // ─── Inner container ─────────────────────────────────
 .experience__inner {
   position: relative;
@@ -63,20 +32,6 @@
   margin-bottom: 4rem;
 
   @include m.mq(sp) { margin-bottom: 2.5rem; }
-}
-
-.experience__eyebrow {
-  display: inline-flex;
-  padding: 0.25rem 0.85rem;
-  border-radius: g.$radius-full;
-  font-size: g.$text-xs;
-  font-weight: g.$weight-semibold;
-  letter-spacing: g.$tracking-widest;
-  text-transform: uppercase;
-  color: g.$color-primary;
-  background: g.$color-primary-light;
-  border: 1px solid rgba(g.$color-primary, 0.2);
-  margin-bottom: 1rem;
 }
 
 .experience__heading {
@@ -295,11 +250,10 @@
   font-size: g.$text-xs;
   font-weight: g.$weight-semibold;
   letter-spacing: g.$tracking-wide;
-  color: #92670A;
-  background: rgba(#D4A017, 0.10);
-  border: 1px solid rgba(#D4A017, 0.35);
-  box-shadow: 0 0 16px rgba(#D4A017, 0.12);
-  line-height: 1;
+  color: g.$color-primary-active;
+  background: g.$color-primary-light;
+  border: 1px solid rgba(g.$color-primary, 0.25);
+  line-height: 1.3;
 }
 
 // ─── Images (Subitt) ─────────────────────────────────
@@ -341,6 +295,77 @@
   @include m.hover {
     transform: scale(1.04);
   }
+}
+
+// ─── Summary + highlight groups (current role) ───────
+.card__summary {
+  font-size: g.$text-base;
+  color: g.$color-text-secondary;
+  line-height: g.$leading-loose;
+  max-width: 72ch;
+  margin-bottom: 1.25rem;
+
+  @include m.mq(sp) { font-size: g.$text-sm; }
+}
+
+.card__highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.highlight {
+  padding: 1.1rem 1.25rem 0.1rem;
+  border-radius: g.$radius-md;
+  border: 1px solid g.$color-border-muted;
+  background: g.$color-glass-subtle;
+
+  @include m.mq(sp) { padding: 1rem 1rem 0.1rem; }
+
+  // Core strength — indigo tint + accent edge
+  &--core {
+    background: g.$color-primary-light;
+    border-color: rgba(g.$color-primary, 0.22);
+    box-shadow: inset 3px 0 0 g.$color-primary;
+  }
+}
+
+.highlight__head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.highlight__title {
+  font-size: g.$text-base;
+  font-weight: g.$weight-bold;
+  letter-spacing: g.$tracking-snug;
+  color: g.$color-text-primary;
+  line-height: g.$leading-snug;
+}
+
+.highlight__badge {
+  padding: 0.15rem 0.6rem;
+  border-radius: g.$radius-full;
+  font-size: g.$text-xs;
+  font-weight: g.$weight-semibold;
+  color: g.$color-text-inverse;
+  background: g.$color-primary;
+}
+
+.card__extras {
+  margin-bottom: 0.25rem;
+}
+
+.card__extras_label {
+  display: block;
+  font-size: g.$text-sm;
+  font-weight: g.$weight-semibold;
+  color: g.$color-text-primary;
+  margin-bottom: 0.5rem;
 }
 
 // ─── Bullets ─────────────────────────────────────────

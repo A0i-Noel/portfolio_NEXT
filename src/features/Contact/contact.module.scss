@@ -15,35 +15,6 @@
   @include m.mq(sp)  { padding: 4rem 0 3rem; }
 }
 
-// ─── Fog ─────────────────────────────────────────────
-%fog {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.contact__fog1 {
-  @extend %fog;
-  width: 600px;
-  height: 600px;
-  bottom: -100px;
-  left: -100px;
-  background: radial-gradient(circle, rgba(g.$color-primary, 0.08) 0%, transparent 70%);
-  @include m.mq(sp) { width: 280px; height: 280px; }
-}
-
-.contact__fog2 {
-  @extend %fog;
-  width: 400px;
-  height: 400px;
-  top: 10%;
-  right: -80px;
-  background: radial-gradient(circle, rgba(g.$color-fog-light, 0.6) 0%, transparent 70%);
-  @include m.mq(sp) { width: 200px; height: 200px; }
-}
-
 // ─── Inner grid ──────────────────────────────────────
 .contact__inner {
   position: relative;
@@ -82,20 +53,6 @@
     position: sticky;
     top: calc(g.$nav-height-pc + 2rem);
   }
-}
-
-.contact__eyebrow {
-  display: inline-flex;
-  width: fit-content;
-  padding: 0.25rem 0.85rem;
-  border-radius: g.$radius-full;
-  font-size: g.$text-xs;
-  font-weight: g.$weight-semibold;
-  letter-spacing: g.$tracking-widest;
-  text-transform: uppercase;
-  color: g.$color-primary;
-  background: g.$color-primary-light;
-  border: 1px solid rgba(g.$color-primary, 0.2);
 }
 
 .contact__heading {

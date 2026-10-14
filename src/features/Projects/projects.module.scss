@@ -15,35 +15,6 @@
   @include m.mq(sp)  { padding: 4rem 0; }
 }
 
-// ─── Fog ─────────────────────────────────────────────
-%fog {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.projects__fog1 {
-  @extend %fog;
-  width: 500px;
-  height: 500px;
-  top: 0%;
-  left: -80px;
-  background: radial-gradient(circle, rgba(g.$color-primary, 0.07) 0%, transparent 70%);
-  @include m.mq(sp) { width: 240px; height: 240px; }
-}
-
-.projects__fog2 {
-  @extend %fog;
-  width: 400px;
-  height: 400px;
-  bottom: 5%;
-  right: -60px;
-  background: radial-gradient(circle, rgba(g.$color-fog-light, 0.6) 0%, transparent 70%);
-  @include m.mq(sp) { width: 200px; height: 200px; }
-}
-
 // ─── Inner container ─────────────────────────────────
 .projects__inner {
   position: relative;
@@ -60,20 +31,6 @@
 .projects__title_block {
   margin-bottom: 3.5rem;
   @include m.mq(sp) { margin-bottom: 2.5rem; }
-}
-
-.projects__eyebrow {
-  display: inline-flex;
-  padding: 0.25rem 0.85rem;
-  border-radius: g.$radius-full;
-  font-size: g.$text-xs;
-  font-weight: g.$weight-semibold;
-  letter-spacing: g.$tracking-widest;
-  text-transform: uppercase;
-  color: g.$color-primary;
-  background: g.$color-primary-light;
-  border: 1px solid rgba(g.$color-primary, 0.2);
-  margin-bottom: 1rem;
 }
 
 .projects__heading {
@@ -110,11 +67,30 @@
 // ─── Grid ────────────────────────────────────────────
 .projects__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  // 6 tracks, cards span 2 → 3 per row. When a row ends with only two
+  // cards, they widen to span 3 each so there's no empty cell.
+  grid-template-columns: repeat(6, 1fr);
   gap: 1.5rem;
 
-  @include m.mq(tab) { grid-template-columns: repeat(2, 1fr); }
-  @include m.mq(sp)  { grid-template-columns: 1fr; }
+  & > * { grid-column: span 2; }
+
+  & > :nth-child(3n + 1):nth-last-child(2),
+  & > :nth-child(3n + 1):nth-last-child(2) + * {
+    grid-column: span 3;
+  }
+
+  @include m.mq(tab) {
+    grid-template-columns: repeat(2, 1fr);
+    & > *,
+    & > :nth-child(3n + 1):nth-last-child(2),
+    & > :nth-child(3n + 1):nth-last-child(2) + * { grid-column: auto; }
+  }
+  @include m.mq(sp)  {
+    grid-template-columns: 1fr;
+    & > *,
+    & > :nth-child(3n + 1):nth-last-child(2),
+    & > :nth-child(3n + 1):nth-last-child(2) + * { grid-column: auto; }
+  }
 }
 
 // ─── Playground label ────────────────────────────────
@@ -210,33 +186,15 @@
 .card__thumb_overlay {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(26, 27, 46, 0.55);
-  backdrop-filter: blur(4px);
+  // Light wash instead of a dark scrim: reads as "archived", not "broken"
+  background: rgba(g.$color-bg, 0.45);
   z-index: 2;
-}
-
-.card__thumb_msg {
-  font-size: g.$text-xs;
-  font-weight: g.$weight-semibold;
-  letter-spacing: g.$tracking-wide;
-  color: rgba(255, 255, 255, 0.75);
-  text-align: center;
-  padding: 0.4rem 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: g.$radius-full;
-  backdrop-filter: blur(4px);
 }
 
 // Status pill — sits top-right over the thumbnail
 .card__status {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: 3;
   display: inline-flex;
+  width: fit-content;
   align-items: center;
   gap: 0.4rem;
   padding: 0.25rem 0.65rem;
@@ -245,8 +203,7 @@
   font-weight: g.$weight-semibold;
   letter-spacing: g.$tracking-wide;
   color: g.$color-text-secondary;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
+  background: g.$color-glass-subtle;
   border: 1px solid g.$color-border;
 }
 

@@ -17,10 +17,10 @@ const ABOUT_COPY = {
   },
   paragraphs: {
     EN: [
-      "I grew up in Tokyo, Japan — a city that taught me to find beauty in precision and meaning in the details. In 2020, I made the leap to the United States to study at BYU-Idaho, chasing a degree in Computer Science with a Finance certificate tucked alongside it.",
-      "College wasn't just about coursework. It was where I discovered that the most interesting problems sit at the intersection of technology and people. That conviction led me to co-found Subitt in 2023 — a startup born from a genuine frustration and built with a small team that cared deeply about what we were making.",
+      "I grew up in Tokyo, Japan, a city that taught me to find beauty in precision and meaning in the details. In 2020, I made the leap to the United States to study at BYU-Idaho, chasing a degree in Computer Science with a Finance certificate tucked alongside it.",
+      "College wasn't just about coursework. It was where I discovered that the most interesting problems sit at the intersection of technology and people. That conviction led me to co-found Subitt in 2023: a startup born from a genuine frustration and built with a small team that cared deeply about what we were making.",
       "In 2025, that same drive pushed me to start Grid. Each venture has taught me something the classroom couldn't: that building something real, with real stakes, is the fastest way to grow.",
-      "Today I sit at the overlap of engineering and leadership — writing code, making product decisions, and learning every single day. I build things that are purposeful, precise, and people-first.",
+      "Today I sit at the overlap of engineering and leadership: writing code, making product decisions, and learning every single day. I build things that are purposeful, precise, and people-first.",
     ],
     JPN: [
       "東京で育ち、細部に美しさを見出し、丁寧さに意味を感じる感覚を身につけました。2020年に渡米し、ブリガムヤング大学アイダホ校でコンピューターサイエンスの学士号とファイナンスの副専攻を取得しました。",
@@ -32,7 +32,7 @@ const ABOUT_COPY = {
   stats: [
     { value: '2',  label: { EN: 'Startups Founded', JPN: '創業スタートアップ' } },
     { value: '5+', label: { EN: 'Years Building',   JPN: '年のキャリア' } },
-    { value: '🇯🇵→🇺🇸', label: { EN: 'Tokyo → Utah',  JPN: '東京 → ユタ' } },
+    { value: 'JP → US', label: { EN: 'Tokyo → Utah',  JPN: '東京 → ユタ' } },
   ],
 } as const
 
@@ -67,8 +67,6 @@ export default function About() {
   return (
     <section id="about" className={styles.about}>
 
-      {/* Subtle fog blob for visual continuity from Hero */}
-      <div className={styles.about__fog} aria-hidden="true" />
 
       <div className={styles.about__inner}>
 
@@ -144,7 +142,7 @@ export default function About() {
             {[
               { year: '2020', event: { EN: 'Moved to the USA · BYU-Idaho',        JPN: '渡米・BYU-Idaho入学' } },
               { year: '2023', event: { EN: 'Co-founded Subitt', JPN: 'Subitt共同創業' } },
-              { year: '202４', event: { EN: 'CS + Finance degree', JPN: 'CS学士・Finance副専攻取得' } },
+              { year: '2024', event: { EN: 'CS + Finance degree', JPN: 'CS学士・Finance副専攻取得' } },
               { year: '2025', event: { EN: 'Founded Grid',                          JPN: 'Grid創業' } },
             ].map((item, i) => (
               <div key={i} className={styles.about__milestone}>
