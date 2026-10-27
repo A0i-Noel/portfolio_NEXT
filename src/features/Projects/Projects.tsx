@@ -5,6 +5,7 @@ import { motion, type Variants } from 'framer-motion'
 import Image from 'next/image'
 import { PiArrowUpRight } from 'react-icons/pi'
 import styles from './projects.module.scss'
+import councilData from '@/data/councilProjects.json'
 
 // ─── Types ────────────────────────────────────────────
 type Lang = 'EN' | 'JPN'
@@ -20,7 +21,7 @@ interface Project {
   title: string
   subtitle: { EN: string; JPN: string }
   description: { EN: string; JPN: string }
-  thumbnail: string   // path in /public/images/
+  thumbnail?: string  // path in /public/images/ — optional for Council-synced projects
   tags: string[]
   status: ProjectStatus
   url?: string        // external live URL
@@ -95,6 +96,44 @@ const PROJECTS: Project[] = [
 },
 ]
 
+// ─── Synced from Claude Council ───────────────────────
+// src/data/councilProjects.json is regenerated weekly by a scheduled task.
+// Hand-written entries above win when ids collide.
+const STATUSES: ProjectStatus[] = ['live', 'unavailable', 'in-progress', 'route-pending']
+
+function toProject(raw: unknown): Project | null {
+  if (!raw || typeof raw !== 'object') return null
+  const r = raw as Record<string, unknown>
+  const str = (v: unknown) => (typeof v === 'string' ? v.trim() : '')
+  const pair = (v: unknown) => {
+    const o = (v && typeof v === 'object' ? v : {}) as Record<string, unknown>
+    return { EN: str(o.EN), JPN: str(o.JPN) || str(o.EN) }
+  }
+  const id = str(r.id), title = str(r.title)
+  const description = pair(r.description)
+  if (!id || !title || !description.EN) return null
+  const status = STATUSES.includes(r.status as ProjectStatus) ? (r.status as ProjectStatus) : 'in-progress'
+  const url = str(r.url)
+  const thumbnail = str(r.thumbnail)
+  return {
+    id,
+    title,
+    subtitle: pair(r.subtitle),
+    description,
+    thumbnail: thumbnail.startsWith('/images/') ? thumbnail : undefined,
+    tags: Array.isArray(r.tags) ? r.tags.map(str).filter(Boolean).slice(0, 8) : [],
+    status,
+    url: /^https:\/\//.test(url) ? url : undefined,
+  }
+}
+
+const COUNCIL_PROJECTS: Project[] = (Array.isArray(councilData.projects) ? councilData.projects : [])
+  .map(toProject)
+  .filter((p): p is Project => p !== null)
+  .filter((p) => !PROJECTS.some((own) => own.id === p.id))
+
+const ALL_PROJECTS: Project[] = [...PROJECTS, ...COUNCIL_PROJECTS]
+
 // ─── Playground ───────────────────────────────────────
 const PLAYGROUND: Project[] = [
   {
@@ -166,13 +205,19 @@ function ProjectCard({ project, lang }: { project: Project; lang: Lang }) {
     >
       {/* ── Thumbnail ── */}
       <div className={styles.card__thumb}>
-        <Image
-          src={project.thumbnail}
-          alt={`${project.title} thumbnail`}
-          fill
-          sizes="(max-width: 767px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className={styles.card__thumb_img}
-        />
+        {project.thumbnail ? (
+          <Image
+            src={project.thumbnail}
+            alt={`${project.title} thumbnail`}
+            fill
+            sizes="(max-width: 767px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className={styles.card__thumb_img}
+          />
+        ) : (
+          <div className={styles.card__thumb_fallback} aria-hidden="true">
+            <span>{project.title}</span>
+          </div>
+        )}
 
         {/* Dim the thumbnail when the product is no longer online */}
         {isUnavailable && (
@@ -257,7 +302,7 @@ export default function Projects() {
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
         >
-          {PROJECTS.map((project) => (
+          {ALL_PROJECTS.map((project) => (
             <ProjectCard
               key={project.id}
               project={project}
