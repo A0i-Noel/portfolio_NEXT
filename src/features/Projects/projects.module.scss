@@ -183,6 +183,27 @@
 }
 
 // Unavailable overlay
+// Shown when a Council-synced project has no screenshot yet
+.card__thumb_fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(g.$color-primary, 0.22), transparent 60%),
+    g.$color-bg-deep;
+  border-bottom: 1px solid g.$color-border-muted;
+
+  span {
+    color: g.$color-text-secondary;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+}
+
 .card__thumb_overlay {
   position: absolute;
   inset: 0;
